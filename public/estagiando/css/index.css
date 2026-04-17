@@ -1,0 +1,479 @@
+/* ==========================================================
+   ESTAGIANDO — Estilos da Página Principal
+   Arquivo: css/index.css
+   Descrição: Estilos específicos da index.html:
+              hero, filtros, cards de vagas e modal.
+   ========================================================== */
+
+/* ----------------------------------------------------------
+   1. HERO — Seção de destaque no topo
+   ---------------------------------------------------------- */
+.hero {
+  position: relative;
+  overflow: hidden;               /* Evita que as bolhas saiam da área */
+  padding: 5rem 0 4rem;
+  background: linear-gradient(
+    135deg,
+    var(--cor-primaria) 0%,
+    var(--fundo-pagina) 60%
+  );
+}
+
+.hero-conteudo {
+  position: relative;
+  z-index: 2;                     /* Fica na frente das bolhas decorativas */
+  text-align: center;
+}
+
+/* Etiqueta pequena no topo do hero */
+.hero-badge {
+  display: inline-block;
+  background: var(--cor-acento);
+  color: white;
+  padding: 0.4rem 1.2rem;
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 700;
+  margin-bottom: 1.2rem;
+  letter-spacing: 0.5px;
+}
+
+.hero-titulo {
+  font-family: var(--fonte-titulo);
+  font-size: clamp(2rem, 5vw, 3.5rem); /* Tamanho responsivo */
+  font-weight: 800;
+  line-height: 1.1;
+  color: var(--texto-principal);
+  margin-bottom: 1rem;
+}
+
+/* Palavra em destaque no título */
+.hero-destaque {
+  color: var(--cor-acento);
+  position: relative;
+  display: inline-block;
+}
+
+/* Sublinhado decorativo */
+.hero-destaque::after {
+  content: '';
+  position: absolute;
+  bottom: -4px;
+  left: 0;
+  width: 100%;
+  height: 4px;
+  background: var(--cor-acento);
+  border-radius: 2px;
+  opacity: 0.4;
+}
+
+.hero-subtitulo {
+  font-size: 1.1rem;
+  color: var(--texto-secundario);
+  margin-bottom: 2.5rem;
+  line-height: 1.7;
+}
+
+/* Números de estatísticas */
+.hero-stats {
+  display: inline-flex;
+  align-items: center;
+  gap: 2rem;
+  background: var(--fundo-card);
+  border: 2px solid var(--borda-cor);
+  border-radius: var(--radius-lg);
+  padding: 1.2rem 2.5rem;
+  box-shadow: var(--sombra-card);
+}
+
+.stat-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.2rem;
+}
+
+.stat-numero {
+  font-family: var(--fonte-titulo);
+  font-size: 2rem;
+  font-weight: 800;
+  color: var(--cor-acento);
+}
+
+.stat-label {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.stat-divisor {
+  width: 1px;
+  height: 40px;
+  background: var(--borda-cor);
+}
+
+/* Bolhas decorativas de fundo */
+.hero-blob {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0.35;
+  pointer-events: none;           /* Não interfere nos cliques */
+}
+
+.hero-blob-1 {
+  width: 400px;
+  height: 400px;
+  background: var(--cor-primaria);
+  top: -150px;
+  right: -100px;
+}
+
+.hero-blob-2 {
+  width: 250px;
+  height: 250px;
+  background: var(--cor-primaria-dark);
+  bottom: -80px;
+  left: -60px;
+}
+
+/* ----------------------------------------------------------
+   2. FILTROS
+   ---------------------------------------------------------- */
+.secao-filtros {
+  padding: 2rem 0;
+}
+
+.filtros-card {
+  padding: 2rem;
+}
+
+.filtros-titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.2rem;
+  margin-bottom: 1.5rem;
+  color: var(--texto-principal);
+}
+
+/* Grade dos filtros: 3 colunas em telas grandes */
+.filtros-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr auto;
+  gap: 1rem;
+  align-items: end;
+}
+
+.filtros-acao {
+  min-width: 160px;
+}
+
+@media (max-width: 640px) {
+  .filtros-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* ----------------------------------------------------------
+   3. LISTAGEM DE VAGAS
+   ---------------------------------------------------------- */
+.secao-vagas {
+  padding: 0 0 3rem;
+}
+
+.vagas-cabecalho {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+
+.vagas-titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.4rem;
+  color: var(--texto-principal);
+}
+
+.vagas-contador {
+  background: var(--cor-primaria);
+  color: var(--cor-acento);
+  padding: 0.4rem 1rem;
+  border-radius: var(--radius-full);
+  font-weight: 700;
+  font-size: 0.85rem;
+}
+
+/* Grade responsiva de cards */
+.vagas-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+  gap: 1.5rem;
+}
+
+/* ----------------------------------------------------------
+   4. CARD DE VAGA
+   ---------------------------------------------------------- */
+.vaga-card {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+.vaga-card-topo {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 0.5rem;
+}
+
+.vaga-titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: var(--texto-principal);
+  line-height: 1.3;
+}
+
+.vaga-empresa {
+  font-weight: 600;
+  color: var(--texto-secundario);
+  font-size: 0.9rem;
+  margin-top: 0.2rem;
+}
+
+.vaga-info {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+  margin-top: 0.5rem;
+}
+
+.vaga-info-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  font-size: 0.85rem;
+  color: var(--texto-secundario);
+  font-weight: 600;
+}
+
+.vaga-descricao {
+  font-size: 0.9rem;
+  color: var(--texto-secundario);
+  line-height: 1.6;
+  /* Limita a 2 linhas com reticências */
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.vaga-bolsa {
+  font-family: var(--fonte-titulo);
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--cor-acento);
+}
+
+.vaga-bolsa span {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--texto-secundario);
+  font-family: var(--fonte-corpo);
+}
+
+.vaga-rodape {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding-top: 0.8rem;
+  border-top: 1.5px solid var(--borda-cor);
+  margin-top: auto;
+}
+
+/* ----------------------------------------------------------
+   5. ESTADO VAZIO
+   ---------------------------------------------------------- */
+.vagas-vazio {
+  text-align: center;
+  padding: 4rem 2rem;
+  color: var(--texto-secundario);
+}
+
+.vazio-emoji {
+  font-size: 3.5rem;
+  display: block;
+  margin-bottom: 1rem;
+}
+
+.vagas-vazio h3 {
+  font-family: var(--fonte-titulo);
+  font-size: 1.3rem;
+  margin-bottom: 0.5rem;
+  color: var(--texto-principal);
+}
+
+.vagas-vazio a {
+  color: var(--cor-acento);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+/* ----------------------------------------------------------
+   6. MODAL — Detalhes e candidatura
+   ---------------------------------------------------------- */
+
+/* Fundo escurecido por trás do modal */
+.modal-overlay {
+  position: fixed;
+  inset: 0;                       /* Cobre a tela inteira */
+  background: rgba(0, 0, 0, 0.5);
+  z-index: 200;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  opacity: 0;
+  pointer-events: none;           /* Desabilitado quando invisível */
+  transition: opacity var(--transicao);
+}
+
+/* Classe adicionada pelo JS para mostrar o modal */
+.modal-overlay.ativo {
+  opacity: 1;
+  pointer-events: all;
+}
+
+.modal {
+  background: var(--fundo-card);
+  border-radius: var(--radius-lg);
+  padding: 2rem;
+  max-width: 560px;
+  width: 100%;
+  position: relative;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+  transform: scale(0.95);
+  transition: transform var(--transicao);
+}
+
+.modal-overlay.ativo .modal {
+  transform: scale(1);
+}
+
+.modal-fechar {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: var(--fundo-input);
+  border: none;
+  border-radius: 50%;
+  width: 32px;
+  height: 32px;
+  cursor: pointer;
+  font-size: 0.9rem;
+  color: var(--texto-secundario);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all var(--transicao);
+}
+
+.modal-fechar:hover {
+  background: var(--cor-primaria);
+  color: var(--cor-acento);
+}
+
+.modal-titulo {
+  font-family: var(--fonte-titulo);
+  font-size: 1.3rem;
+  font-weight: 700;
+  margin-bottom: 0.4rem;
+  padding-right: 2rem;
+}
+
+.modal-empresa {
+  color: var(--texto-secundario);
+  font-weight: 600;
+  margin-bottom: 1.2rem;
+}
+
+.modal-secao {
+  margin-bottom: 1rem;
+}
+
+.modal-secao-titulo {
+  font-weight: 700;
+  font-size: 0.85rem;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  color: var(--texto-secundario);
+  margin-bottom: 0.4rem;
+}
+
+.modal-secao p {
+  color: var(--texto-principal);
+  line-height: 1.6;
+  font-size: 0.95rem;
+}
+
+.modal-destaque {
+  background: var(--cor-primaria);
+  border-radius: var(--radius-md);
+  padding: 1rem 1.2rem;
+  margin: 1rem 0;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.modal-destaque-bolsa {
+  font-family: var(--fonte-titulo);
+  font-size: 1.6rem;
+  font-weight: 800;
+  color: var(--cor-acento);
+}
+
+/* Área de candidatura dentro do modal */
+.candidatura-form {
+  background: var(--fundo-input);
+  border-radius: var(--radius-md);
+  padding: 1.2rem;
+  margin-top: 1.2rem;
+}
+
+.candidatura-form h3 {
+  font-family: var(--fonte-titulo);
+  font-size: 1rem;
+  margin-bottom: 1rem;
+}
+
+/* Lista de candidatos já inscritos */
+.candidatos-lista {
+  margin-top: 1rem;
+}
+
+.candidato-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--borda-cor);
+  font-size: 0.9rem;
+  color: var(--texto-secundario);
+}
+
+.candidato-avatar {
+  width: 28px;
+  height: 28px;
+  background: var(--cor-primaria);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--cor-acento);
+  flex-shrink: 0;
+}

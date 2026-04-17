@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<!--
+  ESTAGIANDO — Página Principal (index.html)
+  Descrição: Exibe as vagas de estágio com filtros por estado e área.
+  Arquivos usados: css/style.css, css/index.css, js/main.js, js/index.js
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <!-- Faz o site funcionar bem em celulares -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estagiando — Encontre seu Estágio</title>
+
+  <!-- Ícone da aba do navegador (emoji como favicon) -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+
+  <!-- Folha de estilos global -->
+  <link rel="stylesheet" href="css/style.css" />
+  <!-- Folha de estilos específica desta página -->
+  <link rel="stylesheet" href="css/index.css" />
+</head>
+<body>
+
+  <!-- =====================================================
+       NAVBAR — Barra de Navegação Superior
+       ===================================================== -->
+  <nav class="navbar">
+  <a href="index.html" class="navbar-logo">
+    Estagi<span>ando</span> 🎓
+  </a>
+
+  <div class="navbar-direita">
+    <ul class="navbar-links">
+      <li><a href="index.html">Vagas</a></li>
+
+      <li id="link-dashboard" style="display:none">
+        <a href="#" id="link-area-usuario">Minha Área</a>
+      </li>
+
+      <li id="link-login">
+        <a href="pages/login.html" class="btn btn-primario btn-sm">Entrar</a>
+      </li>
+
+      <li id="link-sair" style="display:none">
+        <a href="#" onclick="encerrarSessao()" class="btn btn-secundario btn-sm">Sair</a>
+      </li>
+    </ul>
+
+    <!-- Botão de tema agora junto com os outros -->
+    <button 
+      class="btn-tema" 
+      onclick="alternarTema()" 
+      title="Alternar modo escuro" 
+      aria-label="Alternar tema">
+    </button>
+  </div>
+</nav>
+  <!-- =====================================================
+       HERO — Seção de Boas-Vindas
+       ===================================================== -->
+  <section class="hero">
+    <div class="container">
+      <div class="hero-conteudo animar-entrada">
+        <span class="hero-badge">✨ Plataforma de Estágios</span>
+        <h1 class="hero-titulo">
+          Seu próximo estágio<br/>
+          <span class="hero-destaque">começa aqui</span>
+        </h1>
+        <p class="hero-subtitulo">
+          Conectamos estudantes às melhores oportunidades de estágio<br/>
+          em todo o Brasil. Simples, rápido e gratuito para estudantes!
+        </p>
+
+        <!-- Números de destaque -->
+        <div class="hero-stats">
+          <div class="stat-item">
+            <span class="stat-numero" id="total-vagas">0</span>
+            <span class="stat-label">Vagas ativas</span>
+          </div>
+          <div class="stat-divisor"></div>
+          <div class="stat-item">
+            <span class="stat-numero">5</span>
+            <span class="stat-label">Estados</span>
+          </div>
+          <div class="stat-divisor"></div>
+          <div class="stat-item">
+            <span class="stat-numero">4</span>
+            <span class="stat-label">Áreas</span>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Decoração de fundo (bolhas azuis) -->
+    <div class="hero-blob hero-blob-1"></div>
+    <div class="hero-blob hero-blob-2"></div>
+  </section>
+
+  <!-- =====================================================
+       FILTROS — Busca por estado e área
+       ===================================================== -->
+  <section class="secao-filtros">
+    <div class="container">
+      <div class="filtros-card card animar-entrada">
+        <h2 class="filtros-titulo">🔍 Encontre sua vaga ideal</h2>
+
+        <div class="filtros-grid">
+
+          <!-- Filtro por Estado -->
+          <div class="form-grupo">
+            <label class="form-label" for="filtro-estado">📍 Estado</label>
+            <select class="form-select" id="filtro-estado" onchange="aplicarFiltros()">
+              <option value="">Todos os estados</option>
+              <option value="AC">AC — Acre</option>
+              <option value="AL">AL — Alagoas</option>
+              <option value="AP">AP — Amapá</option>
+              <option value="AM">AM — Amazonas</option>
+              <option value="BA">BA — Bahia</option>
+              <option value="CE">CE — Ceará</option>
+              <option value="DF">DF — Distrito Federal</option>
+              <option value="ES">ES — Espírito Santo</option>
+              <option value="GO">GO — Goiás</option>
+              <option value="MA">MA — Maranhão</option>
+              <option value="MT">MT — Mato Grosso</option>
+              <option value="MS">MS — Mato Grosso do Sul</option>
+              <option value="MG">MG — Minas Gerais</option>
+              <option value="PA">PA — Pará</option>
+              <option value="PB">PB — Paraíba</option>
+              <option value="PR">PR — Paraná</option>
+              <option value="PE">PE — Pernambuco</option>
+              <option value="PI">PI — Piauí</option>
+              <option value="RJ">RJ — Rio de Janeiro</option>
+              <option value="RN">RN — Rio Grande do Norte</option>
+              <option value="RS">RS — Rio Grande do Sul</option>
+              <option value="RO">RO — Rondônia</option>
+              <option value="RR">RR — Roraima</option>
+              <option value="SC">SC — Santa Catarina</option>
+              <option value="SP">SP — São Paulo</option>
+              <option value="SE">SE — Sergipe</option>
+              <option value="TO">TO — Tocantins</option>
+            </select>
+          </div>
+
+          <!-- Filtro por Área -->
+          <div class="form-grupo">
+            <label class="form-label" for="filtro-area">🎯 Área de Atuação</label>
+            <select class="form-select" id="filtro-area" onchange="aplicarFiltros()">
+              <option value="">Todas as áreas</option>
+              <option value="tecnologia">💻 Tecnologia</option>
+              <option value="saude">🏥 Saúde</option>
+              <option value="design">🎨 Design</option>
+              <option value="negocios">💼 Negócios / Administração</option>
+              <option value="outros">📚 Outros</option>
+            </select>
+          </div>
+
+          <!-- Botão de limpar filtros -->
+          <div class="form-grupo filtros-acao">
+            <label class="form-label" style="opacity:0">ação</label>
+            <button class="btn btn-secundario" onclick="limparFiltros()">
+              ✖ Limpar filtros
+            </button>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =====================================================
+       LISTAGEM DE VAGAS
+       ===================================================== -->
+  <main class="secao-vagas">
+    <div class="container">
+
+      <!-- Cabeçalho da lista -->
+      <div class="vagas-cabecalho">
+        <h2 class="vagas-titulo">Vagas disponíveis</h2>
+        <span class="vagas-contador" id="contador-vagas">Carregando...</span>
+      </div>
+
+      <!-- Grade de cards das vagas (preenchida pelo JS) -->
+      <div class="vagas-grid" id="lista-vagas">
+        <!-- Os cards são gerados dinamicamente pelo index.js -->
+      </div>
+
+      <!-- Mensagem exibida quando nenhuma vaga é encontrada -->
+      <div class="vagas-vazio" id="vagas-vazio" style="display:none">
+        <span class="vazio-emoji">😕</span>
+        <h3>Nenhuma vaga encontrada</h3>
+        <p>Tente outros filtros ou <a href="#" onclick="limparFiltros()">limpe os filtros</a>.</p>
+      </div>
+
+    </div>
+  </main>
+
+  <!-- =====================================================
+       MODAL — Candidatura
+       Aparece quando o estudante clica em "Candidatar-se"
+       ===================================================== -->
+  <div class="modal-overlay" id="modal-overlay" onclick="fecharModal()">
+    <div class="modal" onclick="event.stopPropagation()">
+      <button class="modal-fechar" onclick="fecharModal()">✕</button>
+
+      <div id="modal-conteudo">
+        <!-- Preenchido dinamicamente pelo JS -->
+      </div>
+    </div>
+  </div>
+
+  <!-- =====================================================
+       RODAPÉ
+       ===================================================== -->
+  <footer>
+    <p>feito pelo soprad <strong>Estagiando</strong> &copy; 2025</p>
+    <p style="margin-top:0.4rem; font-size:0.8rem;">Projeto acadêmico · Apenas front-end</p>
+  </footer>
+
+  <!-- Scripts: carrega o JS principal e depois o da página -->
+  <script src="js/main.js"></script>
+  <script src="js/index.js"></script>
+</body>
+</html>

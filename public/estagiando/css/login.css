@@ -1,0 +1,177 @@
+/* ==========================================================
+   ESTAGIANDO — Estilos da Página de Login
+   Arquivo: css/login.css
+   ========================================================== */
+
+/* Layout de dois painéis */
+.login-pagina {
+  min-height: calc(100vh - 70px);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
+
+/* ----------------------------------------------------------
+   PAINEL ESQUERDO — Decorativo
+   ---------------------------------------------------------- */
+.login-painel-esq {
+  background: linear-gradient(135deg, var(--cor-acento) 0%, var(--cor-primaria-dark) 100%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 3rem;
+  position: relative;
+  overflow: hidden;
+}
+
+.login-ilustracao {
+  position: relative;
+  z-index: 2;
+  color: white;
+}
+
+.ilustr-texto h2 {
+  font-family: var(--fonte-titulo);
+  font-size: 2.5rem;
+  font-weight: 800;
+  line-height: 1.15;
+  margin-bottom: 1rem;
+}
+
+.ilustr-texto p {
+  font-size: 1.05rem;
+  opacity: 0.9;
+  line-height: 1.6;
+  max-width: 300px;
+  margin-bottom: 2rem;
+}
+
+/* Círculos decorativos de fundo */
+.ilustr-circulo {
+  position: absolute;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.ilustr-circulo.grande  { width: 400px; height: 400px; top: -150px; right: -150px; }
+.ilustr-circulo.medio   { width: 200px; height: 200px; bottom: -50px; left: -50px; }
+.ilustr-circulo.pequeno { width: 100px; height: 100px; top: 50%; left: 10px; }
+
+/* Mini cards flutuantes decorativos */
+.mini-card {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  background: rgba(255, 255, 255, 0.2);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 0.6rem 1rem;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.9rem;
+}
+
+/* ----------------------------------------------------------
+   PAINEL DIREITO — Formulário
+   ---------------------------------------------------------- */
+.login-painel-dir {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem;
+  background-color: var(--fundo-pagina);
+  transition: background-color var(--transicao);
+}
+
+.login-form-container {
+  width: 100%;
+  max-width: 420px;
+  padding: 2.5rem;
+}
+
+/* ----------------------------------------------------------
+   SELETOR DE PERFIL (Estudante / Empresa)
+   ---------------------------------------------------------- */
+.perfil-selector {
+  display: flex;
+  background: var(--fundo-input);
+  border-radius: var(--radius-full);
+  padding: 4px;
+  margin-bottom: 2rem;
+  border: 2px solid var(--borda-cor);
+}
+
+.perfil-btn {
+  flex: 1;
+  padding: 0.6rem;
+  border: none;
+  border-radius: var(--radius-full);
+  font-family: var(--fonte-corpo);
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--texto-secundario);
+  background: transparent;
+  transition: all var(--transicao);
+}
+
+.perfil-btn.ativo {
+  background: var(--cor-acento);
+  color: white;
+  box-shadow: 0 2px 10px rgba(74, 144, 217, 0.4);
+}
+
+/* ----------------------------------------------------------
+   ABAS (Entrar / Cadastrar)
+   ---------------------------------------------------------- */
+.abas {
+  display: flex;
+  gap: 0;
+  margin-bottom: 1.5rem;
+  border-bottom: 2px solid var(--borda-cor);
+}
+
+.aba {
+  flex: 1;
+  padding: 0.7rem;
+  border: none;
+  background: transparent;
+  font-family: var(--fonte-corpo);
+  font-size: 0.95rem;
+  font-weight: 700;
+  cursor: pointer;
+  color: var(--texto-secundario);
+  transition: all var(--transicao);
+  border-bottom: 3px solid transparent;
+  margin-bottom: -2px;
+}
+
+.aba.ativo {
+  color: var(--cor-acento);
+  border-bottom-color: var(--cor-acento);
+}
+
+/* Link de alternância de aba */
+.link-alternar {
+  text-align: center;
+  margin-top: 1.2rem;
+  font-size: 0.9rem;
+  color: var(--texto-secundario);
+}
+
+.link-alternar a {
+  color: var(--cor-acento);
+  font-weight: 700;
+}
+
+/* ----------------------------------------------------------
+   RESPONSIVIDADE
+   ---------------------------------------------------------- */
+@media (max-width: 768px) {
+  .login-pagina {
+    grid-template-columns: 1fr;
+  }
+
+  .login-painel-esq {
+    display: none; /* Esconde a decoração em telas pequenas */
+  }
+}

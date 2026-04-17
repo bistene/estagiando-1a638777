@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<!--
+  ESTAGIANDO — Dashboard do Estudante (pages/dashboard-estudante.html)
+  Descrição: Área do estudante logado. Exibe suas candidaturas e perfil.
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estagiando — Meu Perfil</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/dashboard.css" />
+</head>
+<body>
+
+  <nav class="navbar">
+    <a href="../index.html" class="navbar-logo">Estagi<span>ando</span> 🎓</a>
+    <div class="navbar-direita">
+      <ul class="navbar-links">
+        <li><a href="../index.html">← Ver vagas</a></li>
+        <li><a href="#" onclick="encerrarSessao()" class="btn btn-secundario btn-sm">Sair</a></li>
+      </ul>
+      <button class="btn-tema" onclick="alternarTema()" title="Alternar modo escuro" aria-label="Alternar tema"></button>
+    </div>
+  </nav>
+
+  <main class="dashboard-pagina container">
+
+    <!-- CABEÇALHO DO PERFIL -->
+    <div class="perfil-header card animar-entrada">
+      <div class="perfil-avatar" id="perfil-avatar">?</div>
+      <div class="perfil-info">
+        <h1 class="perfil-nome" id="perfil-nome">Carregando...</h1>
+        <p class="perfil-email" id="perfil-email"></p>
+        <div class="perfil-tags">
+          <span class="tag" id="perfil-area-tag">—</span>
+          <span class="tag tag-tech">🎓 Estudante</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- ESTATÍSTICAS -->
+    <div class="dash-stats animar-entrada">
+      <div class="dash-stat-card card">
+        <span class="dash-stat-numero" id="stat-candidaturas">0</span>
+        <span class="dash-stat-label">Candidaturas</span>
+      </div>
+      <div class="dash-stat-card card">
+        <span class="dash-stat-numero" id="stat-vagas-disponiveis">0</span>
+        <span class="dash-stat-label">Vagas disponíveis</span>
+      </div>
+      <div class="dash-stat-card card">
+        <span class="dash-stat-numero">🔍</span>
+        <span class="dash-stat-label">Status: Buscando</span>
+      </div>
+    </div>
+
+    <!-- MINHAS CANDIDATURAS -->
+    <div class="dash-secao animar-entrada">
+      <h2 class="dash-secao-titulo">📋 Minhas candidaturas</h2>
+      <div id="lista-candidaturas">
+        <!-- Preenchido pelo JS -->
+      </div>
+    </div>
+
+    <!-- VAGAS RECOMENDADAS (pela área de interesse) -->
+    <div class="dash-secao animar-entrada">
+      <h2 class="dash-secao-titulo">⭐ Vagas recomendadas para você</h2>
+      <div class="vagas-grid" id="vagas-recomendadas">
+        <!-- Preenchido pelo JS -->
+      </div>
+    </div>
+
+  </main>
+
+  <footer>
+    <p>Feito com 💙 pela turma de ADS — <strong>Estagiando</strong> &copy; 2025</p>
+  </footer>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/dashboard-estudante.js"></script>
+</body>
+</html>
