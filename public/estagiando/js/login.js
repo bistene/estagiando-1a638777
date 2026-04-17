@@ -63,7 +63,52 @@ function mostrarAba(aba) {
 }
 
 /* ----------------------------------------------------------
-   3. LOGIN
+   3. VALIDADORES
+   ---------------------------------------------------------- */
+
+/**
+ * validarEmail(email)
+ * Verifica se o e-mail tem um formato válido (ex: nome@dominio.com).
+ */
+function validarEmail(email) {
+  // Regex simples e segura para a maioria dos e-mails reais
+  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+  return regex.test(email);
+}
+
+/**
+ * validarSenhaForte(senha)
+ * Regras: mínimo 8 caracteres, ao menos 1 letra maiúscula,
+ *         1 letra minúscula e 1 número.
+ * Retorna { ok: boolean, mensagem: string }
+ */
+function validarSenhaForte(senha) {
+  if (senha.length < 8) {
+    return { ok: false, mensagem: 'A senha deve ter pelo menos 8 caracteres.' };
+  }
+  if (!/[A-Z]/.test(senha)) {
+    return { ok: false, mensagem: 'A senha deve conter pelo menos uma letra maiúscula.' };
+  }
+  if (!/[a-z]/.test(senha)) {
+    return { ok: false, mensagem: 'A senha deve conter pelo menos uma letra minúscula.' };
+  }
+  if (!/[0-9]/.test(senha)) {
+    return { ok: false, mensagem: 'A senha deve conter pelo menos um número.' };
+  }
+  return { ok: true, mensagem: '' };
+}
+
+/**
+ * validarCNPJ(cnpj)
+ * Valida se o CNPJ tem 14 dígitos (após remover pontuação).
+ */
+function validarCNPJ(cnpj) {
+  const apenasNumeros = cnpj.replace(/\D/g, '');
+  return apenasNumeros.length === 14;
+}
+
+/* ----------------------------------------------------------
+   4. LOGIN
    ---------------------------------------------------------- */
 
 /**
@@ -78,6 +123,12 @@ function fazerLogin() {
   // Validação básica
   if (!email || !senha) {
     mostrarAlerta('Preencha o e-mail e a senha.', 'erro', 'alerta-login');
+    return;
+  }
+
+  // Validação de formato de e-mail
+  if (!validarEmail(email)) {
+    mostrarAlerta('E-mail inválido. Use o formato: nome@dominio.com', 'erro', 'alerta-login');
     return;
   }
 
@@ -124,9 +175,38 @@ function fazerCadastro() {
     return;
   }
 
-  if (senha.length < 6) {
-    mostrarAlerta('A senha deve ter pelo menos 6 caracteres.', 'erro', 'alerta-login');
+  if (nome.length < 2) {
+    mostrarAlerta('O nome deve ter pelo menos 2 caracteres.', 'erro', 'alerta-login');
     return;
+  }
+
+  if (!validarEmail(email)) {
+    mostrarAlerta('E-mail inválido. Use o formato: nome@dominio.com', 'erro', 'alerta-login');
+    return;
+  }
+
+  const checagemSenha = validarSenhaForte(senha);
+  if (!checagemSenha.ok) {
+    mostrarAlerta(checagemSenha.mensagem, 'erro', 'alerta-login');
+    return;
+  }
+
+  // Validação extra para empresa: CNPJ
+  if (perfilAtual === 'empresa') {
+    const cnpj = document.getElementById('cad-cnpj').value;
+    if (!validarCNPJ(cnpj)) {
+      mostrarAlerta('CNPJ inválido. Deve conter 14 dígitos.', 'erro', 'alerta-login');
+      return;
+    }
+  }
+
+  // Validação extra para estudante: área de interesse
+  if (perfilAtual === 'estudante') {
+    const area = document.getElementById('cad-area').value;
+    if (!area) {
+      mostrarAlerta('Selecione sua área de interesse.', 'erro', 'alerta-login');
+      return;
+    }
   }
 
   // Verifica se o e-mail já está cadastrado
