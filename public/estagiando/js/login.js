@@ -175,9 +175,38 @@ function fazerCadastro() {
     return;
   }
 
-  if (senha.length < 6) {
-    mostrarAlerta('A senha deve ter pelo menos 6 caracteres.', 'erro', 'alerta-login');
+  if (nome.length < 2) {
+    mostrarAlerta('O nome deve ter pelo menos 2 caracteres.', 'erro', 'alerta-login');
     return;
+  }
+
+  if (!validarEmail(email)) {
+    mostrarAlerta('E-mail inválido. Use o formato: nome@dominio.com', 'erro', 'alerta-login');
+    return;
+  }
+
+  const checagemSenha = validarSenhaForte(senha);
+  if (!checagemSenha.ok) {
+    mostrarAlerta(checagemSenha.mensagem, 'erro', 'alerta-login');
+    return;
+  }
+
+  // Validação extra para empresa: CNPJ
+  if (perfilAtual === 'empresa') {
+    const cnpj = document.getElementById('cad-cnpj').value;
+    if (!validarCNPJ(cnpj)) {
+      mostrarAlerta('CNPJ inválido. Deve conter 14 dígitos.', 'erro', 'alerta-login');
+      return;
+    }
+  }
+
+  // Validação extra para estudante: área de interesse
+  if (perfilAtual === 'estudante') {
+    const area = document.getElementById('cad-area').value;
+    if (!area) {
+      mostrarAlerta('Selecione sua área de interesse.', 'erro', 'alerta-login');
+      return;
+    }
   }
 
   // Verifica se o e-mail já está cadastrado
