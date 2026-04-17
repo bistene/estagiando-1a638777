@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<!--
+  ESTAGIANDO — Página de Login (pages/login.html)
+  Descrição: Tela dividida para login de Estudante e Empresa.
+             Inclui cadastro e alternância entre os dois perfis.
+-->
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Estagiando — Entrar</title>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
+
+  <!-- Volta um nível para pegar o CSS (estamos dentro de /pages/) -->
+  <link rel="stylesheet" href="../css/style.css" />
+  <link rel="stylesheet" href="../css/login.css" />
+</head>
+<body>
+
+  <!-- Navbar mínima -->
+  <nav class="navbar">
+    <a href="../index.html" class="navbar-logo">Estagi<span>ando</span> 🎓</a>
+    <div style="display:flex;align-items:center;gap:1rem">
+      <a href="../index.html" class="btn btn-secundario btn-sm">← Ver vagas</a>
+      <button class="btn-tema" onclick="alternarTema()" title="Alternar modo escuro" aria-label="Alternar tema"></button>
+    </div>
+  </nav>
+
+  <!-- =====================================================
+       LAYOUT PRINCIPAL: dois painéis lado a lado
+       ===================================================== -->
+  <main class="login-pagina">
+
+    <!-- PAINEL ESQUERDO — Decorativo (some em mobile) -->
+    <div class="login-painel-esq">
+      <div class="login-ilustracao">
+        <div class="ilustr-circulo grande"></div>
+        <div class="ilustr-circulo medio"></div>
+        <div class="ilustr-circulo pequeno"></div>
+
+        <div class="ilustr-texto">
+          <h2>Conectando<br/>futuros!</h2>
+          <p>A plataforma que liga estudantes às melhores oportunidades de estágio.</p>
+
+          <!-- Mini cards flutuantes decorativos -->
+          <div class="mini-card">
+            <span>🎓</span> Estudantes conectados
+          </div>
+          <div class="mini-card" style="margin-left:2rem;margin-top:0.6rem">
+            <span>🏢</span> Empresas parceiras
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAINEL DIREITO — Formulário de login/cadastro -->
+    <div class="login-painel-dir">
+      <div class="login-form-container card animar-entrada">
+
+        <!-- SELETOR DE PERFIL: Estudante ou Empresa -->
+        <div class="perfil-selector">
+          <button
+            class="perfil-btn ativo"
+            id="btn-estudante"
+            onclick="selecionarPerfil('estudante')"
+          >
+            🎓 Estudante
+          </button>
+          <button
+            class="perfil-btn"
+            id="btn-empresa"
+            onclick="selecionarPerfil('empresa')"
+          >
+            🏢 Empresa
+          </button>
+        </div>
+
+        <!-- ABAS: Login ou Cadastro -->
+        <div class="abas">
+          <button class="aba ativo" id="aba-login" onclick="mostrarAba('login')">
+            Entrar
+          </button>
+          <button class="aba" id="aba-cadastro" onclick="mostrarAba('cadastro')">
+            Cadastrar
+          </button>
+        </div>
+
+        <!-- Alerta de feedback -->
+        <div id="alerta-login" class="alerta"></div>
+
+        <!-- =====================================================
+             FORMULÁRIO DE LOGIN
+             ===================================================== -->
+        <div id="form-login">
+          <div class="form-grupo">
+            <label class="form-label" for="login-email">E-mail</label>
+            <input
+              class="form-input"
+              type="email"
+              id="login-email"
+              placeholder="seu@email.com"
+            />
+          </div>
+
+          <div class="form-grupo">
+            <label class="form-label" for="login-senha">Senha</label>
+            <input
+              class="form-input"
+              type="password"
+              id="login-senha"
+              placeholder="••••••••"
+            />
+          </div>
+
+          <button class="btn btn-primario" style="width:100%;margin-top:0.5rem" onclick="fazerLogin()">
+            Entrar na plataforma
+          </button>
+
+          <p class="link-alternar">
+            Não tem conta?
+            <a href="#" onclick="mostrarAba('cadastro')">Cadastre-se grátis</a>
+          </p>
+        </div>
+
+        <!-- =====================================================
+             FORMULÁRIO DE CADASTRO
+             ===================================================== -->
+        <div id="form-cadastro" style="display:none">
+
+          <!-- Campo: Nome -->
+          <div class="form-grupo">
+            <label class="form-label" for="cad-nome" id="label-nome">Nome completo</label>
+            <input
+              class="form-input"
+              type="text"
+              id="cad-nome"
+              placeholder="Seu nome"
+            />
+          </div>
+
+          <!-- Campo: E-mail -->
+          <div class="form-grupo">
+            <label class="form-label" for="cad-email">E-mail</label>
+            <input
+              class="form-input"
+              type="email"
+              id="cad-email"
+              placeholder="seu@email.com"
+            />
+          </div>
+
+          <!-- Campo: Senha -->
+          <div class="form-grupo">
+            <label class="form-label" for="cad-senha">Senha</label>
+            <input
+              class="form-input"
+              type="password"
+              id="cad-senha"
+              placeholder="Mínimo 6 caracteres"
+            />
+          </div>
+
+          <!-- Campo extra para estudante: área de interesse -->
+          <div class="form-grupo" id="campo-area" >
+            <label class="form-label" for="cad-area">Área de interesse</label>
+            <select class="form-select" id="cad-area">
+              <option value="">Selecione sua área</option>
+              <option value="tecnologia">💻 Tecnologia</option>
+              <option value="saude">🏥 Saúde</option>
+              <option value="design">🎨 Design</option>
+              <option value="negocios">💼 Negócios / Administração</option>
+              <option value="outros">📚 Outros</option>
+            </select>
+          </div>
+
+          <!-- Campo extra para empresa: CNPJ (aparece somente para empresa) -->
+          <div class="form-grupo" id="campo-cnpj" style="display:none">
+            <label class="form-label" for="cad-cnpj">CNPJ da empresa</label>
+            <input
+              class="form-input"
+              type="text"
+              id="cad-cnpj"
+              placeholder="00.000.000/0001-00"
+              maxlength="18"
+            />
+          </div>
+
+          <button class="btn btn-primario" style="width:100%;margin-top:0.5rem" onclick="fazerCadastro()">
+            Criar minha conta
+          </button>
+
+          <p class="link-alternar">
+            Já tem conta?
+            <a href="#" onclick="mostrarAba('login')">Entrar</a>
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+  </main>
+
+  <script src="../js/main.js"></script>
+  <script src="../js/login.js"></script>
+</body>
+</html>
