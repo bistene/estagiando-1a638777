@@ -39,6 +39,7 @@ function selecionarPerfil(perfil) {
   // Mostra/esconde campos exclusivos
   document.getElementById('campo-area').style.display  = perfil === 'estudante' ? 'flex' : 'none';
   document.getElementById('campo-cnpj').style.display  = perfil === 'empresa'   ? 'flex' : 'none';
+  document.getElementById('campo-cpf').style.display   = perfil === 'estudante' ? 'flex' : 'none';
 }
 
 /* ----------------------------------------------------------
@@ -63,52 +64,7 @@ function mostrarAba(aba) {
 }
 
 /* ----------------------------------------------------------
-   3. VALIDADORES
-   ---------------------------------------------------------- */
-
-/**
- * validarEmail(email)
- * Verifica se o e-mail tem um formato válido (ex: nome@dominio.com).
- */
-function validarEmail(email) {
-  // Regex simples e segura para a maioria dos e-mails reais
-  const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
-  return regex.test(email);
-}
-
-/**
- * validarSenhaForte(senha)
- * Regras: mínimo 8 caracteres, ao menos 1 letra maiúscula,
- *         1 letra minúscula e 1 número.
- * Retorna { ok: boolean, mensagem: string }
- */
-function validarSenhaForte(senha) {
-  if (senha.length < 8) {
-    return { ok: false, mensagem: 'A senha deve ter pelo menos 8 caracteres.' };
-  }
-  if (!/[A-Z]/.test(senha)) {
-    return { ok: false, mensagem: 'A senha deve conter pelo menos uma letra maiúscula.' };
-  }
-  if (!/[a-z]/.test(senha)) {
-    return { ok: false, mensagem: 'A senha deve conter pelo menos uma letra minúscula.' };
-  }
-  if (!/[0-9]/.test(senha)) {
-    return { ok: false, mensagem: 'A senha deve conter pelo menos um número.' };
-  }
-  return { ok: true, mensagem: '' };
-}
-
-/**
- * validarCNPJ(cnpj)
- * Valida se o CNPJ tem 14 dígitos (após remover pontuação).
- */
-function validarCNPJ(cnpj) {
-  const apenasNumeros = cnpj.replace(/\D/g, '');
-  return apenasNumeros.length === 14;
-}
-
-/* ----------------------------------------------------------
-   4. LOGIN
+   3. LOGIN
    ---------------------------------------------------------- */
 
 /**
@@ -123,12 +79,6 @@ function fazerLogin() {
   // Validação básica
   if (!email || !senha) {
     mostrarAlerta('Preencha o e-mail e a senha.', 'erro', 'alerta-login');
-    return;
-  }
-
-  // Validação de formato de e-mail
-  if (!validarEmail(email)) {
-    mostrarAlerta('E-mail inválido. Use o formato: nome@dominio.com', 'erro', 'alerta-login');
     return;
   }
 
@@ -169,42 +119,35 @@ function fazerCadastro() {
   const email = document.getElementById('cad-email').value.trim();
   const senha = document.getElementById('cad-senha').value;
 
-  // Validações
+  // Validações básicas de preenchimento
   if (!nome || !email || !senha) {
     mostrarAlerta('Preencha todos os campos obrigatórios.', 'erro', 'alerta-login');
     return;
   }
 
-  if (nome.length < 2) {
-    mostrarAlerta('O nome deve ter pelo menos 2 caracteres.', 'erro', 'alerta-login');
-    return;
-  }
-
+  // Validação de e-mail (exige nome@dominio.extensao)
   if (!validarEmail(email)) {
-    mostrarAlerta('E-mail inválido. Use o formato: nome@dominio.com', 'erro', 'alerta-login');
+    mostrarAlerta('Digite um e-mail válido. Ex: nome@gmail.com', 'erro', 'alerta-login');
+    document.getElementById('cad-email').focus();
     return;
   }
 
-  const checagemSenha = validarSenhaForte(senha);
-  if (!checagemSenha.ok) {
-    mostrarAlerta(checagemSenha.mensagem, 'erro', 'alerta-login');
+  if (senha.length < 6) {
+    mostrarAlerta('A senha deve ter pelo menos 6 caracteres.', 'erro', 'alerta-login');
     return;
   }
 
-  // Validação extra para empresa: CNPJ
-  if (perfilAtual === 'empresa') {
-    const cnpj = document.getElementById('cad-cnpj').value;
-    if (!validarCNPJ(cnpj)) {
-      mostrarAlerta('CNPJ inválido. Deve conter 14 dígitos.', 'erro', 'alerta-login');
+  // Validação de CPF (somente para estudante)
+  if (perfilAtual === 'estudante') {
+    const cpf = document.getElementById('cad-cpf').value;
+    if (!cpf) {
+      mostrarAlerta('O CPF é obrigatório para estudantes.', 'erro', 'alerta-login');
+      document.getElementById('cad-cpf').focus();
       return;
     }
-  }
-
-  // Validação extra para estudante: área de interesse
-  if (perfilAtual === 'estudante') {
-    const area = document.getElementById('cad-area').value;
-    if (!area) {
-      mostrarAlerta('Selecione sua área de interesse.', 'erro', 'alerta-login');
+    if (!validarCpf(cpf)) {
+      mostrarAlerta('CPF inválido. Verifique os números digitados.', 'erro', 'alerta-login');
+      document.getElementById('cad-cpf').focus();
       return;
     }
   }
@@ -227,10 +170,22 @@ function fazerCadastro() {
   // Campos extras conforme o tipo
   if (perfilAtual === 'estudante') {
     novoUsuario.area = document.getElementById('cad-area').value;
+    novoUsuario.cpf  = document.getElementById('cad-cpf').value;
     novoUsuario.candidaturas = []; // Lista de vagas que se candidatou
   } else {
     novoUsuario.cnpj = document.getElementById('cad-cnpj').value;
   }
+
+  // Endereço (comum para estudante e empresa)
+  novoUsuario.endereco = {
+    cep:         document.getElementById('cad-cep').value,
+    rua:         document.getElementById('cad-rua').value,
+    numero:      document.getElementById('cad-numero').value,
+    complemento: document.getElementById('cad-complemento').value,
+    bairro:      document.getElementById('cad-bairro').value,
+    cidade:      document.getElementById('cad-cidade').value,
+    uf:          document.getElementById('cad-uf').value
+  };
 
   // Salva o novo usuário
   usuarios.push(novoUsuario);
@@ -285,3 +240,125 @@ document.addEventListener('DOMContentLoaded', function () {
     }
   }
 });
+
+/* ----------------------------------------------------------
+   6. VALIDAÇÃO DE E-MAIL
+   ---------------------------------------------------------- */
+
+/**
+ * validarEmail(email)
+ * Verifica se o e-mail tem formato válido: algo@dominio.extensao
+ * Rejeita entradas como "teste", "teste@", "teste@x", etc.
+ */
+function validarEmail(email) {
+  // Exige: caracteres @ dominio . extensao com pelo menos 2 letras
+  var regex = /^[^\s@]+@[^\s@]+\.[a-zA-Z]{2,}$/;
+  return regex.test(email);
+}
+
+/**
+ * validarEmailAoDigitar(input)
+ * Dá feedback visual em tempo real enquanto o usuário digita o e-mail.
+ */
+function validarEmailAoDigitar(input) {
+  var feedback = document.getElementById('feedback-email');
+  var valor = input.value.trim();
+
+  if (valor.length === 0) {
+    feedback.style.display = 'none';
+    input.style.borderColor = '';
+    return;
+  }
+
+  if (validarEmail(valor)) {
+    feedback.textContent = '✅ E-mail válido';
+    feedback.style.color = '#1a6040';
+    input.style.borderColor = '#34c77a';
+  } else {
+    feedback.textContent = '❌ E-mail inválido. Ex: nome@gmail.com';
+    feedback.style.color = '#a02020';
+    input.style.borderColor = '#e74c3c';
+  }
+  feedback.style.display = 'block';
+}
+
+/* ----------------------------------------------------------
+   7. VALIDAÇÃO E MÁSCARA DE CPF
+   ---------------------------------------------------------- */
+
+/**
+ * mascararCpf(input)
+ * Aplica a máscara 000.000.000-00 enquanto o usuário digita.
+ */
+function mascararCpf(input) {
+  var v = input.value.replace(/\D/g, '').substring(0, 11);
+  if (v.length > 9) {
+    v = v.substring(0, 3) + '.' + v.substring(3, 6) + '.' + v.substring(6, 9) + '-' + v.substring(9);
+  } else if (v.length > 6) {
+    v = v.substring(0, 3) + '.' + v.substring(3, 6) + '.' + v.substring(6);
+  } else if (v.length > 3) {
+    v = v.substring(0, 3) + '.' + v.substring(3);
+  }
+  input.value = v;
+
+  // Feedback em tempo real
+  var feedback = document.getElementById('feedback-cpf');
+  var digits = input.value.replace(/\D/g, '');
+
+  if (digits.length === 0) {
+    feedback.style.display = 'none';
+    input.style.borderColor = '';
+    return;
+  }
+
+  if (digits.length === 11) {
+    if (validarCpf(input.value)) {
+      feedback.textContent = '✅ CPF válido';
+      feedback.style.color = '#1a6040';
+      input.style.borderColor = '#34c77a';
+    } else {
+      feedback.textContent = '❌ CPF inválido. Verifique os números.';
+      feedback.style.color = '#a02020';
+      input.style.borderColor = '#e74c3c';
+    }
+    feedback.style.display = 'block';
+  } else {
+    feedback.style.display = 'none';
+    input.style.borderColor = '';
+  }
+}
+
+/**
+ * validarCpf(cpf)
+ * Valida o CPF pelos dígitos verificadores (algoritmo oficial da Receita Federal).
+ * Rejeita sequências repetidas como 111.111.111-11.
+ */
+function validarCpf(cpf) {
+  var nums = cpf.replace(/\D/g, '');
+
+  if (nums.length !== 11) return false;
+
+  // Rejeita sequências de dígitos iguais (000...0, 111...1, etc.)
+  if (/^(\d)\1{10}$/.test(nums)) return false;
+
+  // Calcula 1º dígito verificador
+  var soma = 0;
+  for (var i = 0; i < 9; i++) {
+    soma += parseInt(nums[i]) * (10 - i);
+  }
+  var resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(nums[9])) return false;
+
+  // Calcula 2º dígito verificador
+  soma = 0;
+  for (var i = 0; i < 10; i++) {
+    soma += parseInt(nums[i]) * (11 - i);
+  }
+  resto = (soma * 10) % 11;
+  if (resto === 10 || resto === 11) resto = 0;
+  if (resto !== parseInt(nums[10])) return false;
+
+  return true;
+}
+
