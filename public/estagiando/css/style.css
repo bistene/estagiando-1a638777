@@ -1,73 +1,29 @@
-/* ==========================================================
-   ESTAGIANDO — Folha de Estilos Principal
-   Arquivo: css/style.css
-   Descrição: Define as variáveis de cor, tipografia, reset,
-              componentes reutilizáveis e o modo escuro (dark mode).
-   ========================================================== */
-
-/* ----------------------------------------------------------
-   1. IMPORTAÇÃO DE FONTES
-   Usamos o Google Fonts para importar duas fontes:
-   - "Nunito": moderna, arredondada e jovial (perfeita para estudantes)
-   - "Poppins": clean e profissional para títulos
-   ---------------------------------------------------------- */
 @import url('https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap');
 
-/* ----------------------------------------------------------
-   2. VARIÁVEIS CSS (Design Tokens)
-   CSS Variables permitem mudar o tema inteiro trocando
-   apenas estes valores. É a base do nosso dark mode!
-   ---------------------------------------------------------- */
 :root {
-  /* — Paleta principal — */
-  --cor-primaria:      #c4dafa;   /* Ciano/azul suave — cor da marca  */
-  --cor-primaria-dark: #8ab8f5;   /* Versão mais escura da cor primária */
-  --cor-acento:        #4a90d9;   /* Azul médio para botões e destaques  */
-  --cor-acento-dark:   #2d6db5;   /* Azul escuro para hover de botões    */
-
-  /* — Cores de fundo — */
-  --fundo-pagina:      #f0f6ff;   /* Azul bem clarinho, não cansa a vista */
-  --fundo-card:        #ffffff;   /* Branco para os cards                  */
-  --fundo-navbar:      #ffffff;   /* Branco para a barra de navegação      */
-  --fundo-input:       #f8fbff;   /* Fundo dos campos de formulário        */
-
-  /* — Cores de texto — */
-  --texto-principal:   #1a2a3a;   /* Quase preto, suave para leitura       */
-  --texto-secundario:  #5a7a9a;   /* Cinza-azulado para subtítulos         */
-  --texto-placeholder: #8aabb0;   /* Cor do placeholder dos inputs         */
-
-  /* — Bordas e sombras — */
-  --borda-cor:         #d4e8fa;   /* Bordas sutis em azul claro            */
-  --sombra-card:       0 4px 20px rgba(74, 144, 217, 0.12);
+    --cor-primaria:      #c4dafa;     --cor-primaria-dark: #8ab8f5;     --cor-acento:        #4a90d9;     --cor-acento-dark:   #2d6db5;   
+    --fundo-pagina:      #f0f6ff;     --fundo-card:        #ffffff;     --fundo-navbar:      #ffffff;     --fundo-input:       #f8fbff;   
+    --texto-principal:   #1a2a3a;     --texto-secundario:  #5a7a9a;     --texto-placeholder: #8aabb0;   
+    --borda-cor:         #d4e8fa;     --sombra-card:       0 4px 20px rgba(74, 144, 217, 0.12);
   --sombra-hover:      0 8px 30px rgba(74, 144, 217, 0.25);
 
-  /* — Tags de área — */
-  --tag-tech:    #dbeeff;
+    --tag-tech:    #dbeeff;
   --tag-saude:   #d8f5e9;
   --tag-negocio: #fef3d8;
   --tag-design:  #fde8ff;
   --tag-outro:   #e8e8e8;
 
-  /* — Tipografia — */
-  --fonte-titulo: 'Poppins', sans-serif;
+    --fonte-titulo: 'Poppins', sans-serif;
   --fonte-corpo:  'Nunito', sans-serif;
 
-  /* — Bordas arredondadas — */
-  --radius-sm:   8px;
+    --radius-sm:   8px;
   --radius-md:   14px;
   --radius-lg:   24px;
   --radius-full: 999px;
 
-  /* — Transições — */
-  --transicao: 0.3s ease;
+    --transicao: 0.3s ease;
 }
 
-/* ----------------------------------------------------------
-   3. DARK MODE (Modo Escuro)
-   Quando o body recebe a classe "dark-mode", todas as
-   variáveis são sobrescritas com versões escuras.
-   Isso é tudo que precisamos para mudar o tema inteiro!
-   ---------------------------------------------------------- */
 body.dark-mode {
   --cor-primaria:      #4a7ab5;
   --cor-primaria-dark: #2d5a8e;
@@ -94,20 +50,13 @@ body.dark-mode {
   --tag-outro:   #2a2a2a;
 }
 
-/* ----------------------------------------------------------
-   4. RESET E BASE
-   Remove estilos padrão do navegador para termos
-   controle total sobre a aparência.
-   ---------------------------------------------------------- */
 *, *::before, *::after {
   margin: 0;
   padding: 0;
-  box-sizing: border-box; /* Tamanho inclui padding e borda */
-}
+  box-sizing: border-box; }
 
 html {
-  scroll-behavior: smooth; /* Rolagem suave ao clicar em âncoras */
-}
+  scroll-behavior: smooth; }
 
 body {
   font-family: var(--fonte-corpo);
@@ -128,9 +77,6 @@ img {
   display: block;
 }
 
-/* ----------------------------------------------------------
-   5. NAVBAR — Barra de Navegação
-   ---------------------------------------------------------- */
 .navbar-direita {
   display: flex;
   align-items: center;
@@ -144,8 +90,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  position: sticky;  /* Fica fixo no topo ao rolar a página */
-  top: 0;
+  position: sticky;    top: 0;
   z-index: 100;
   box-shadow: 0 2px 12px rgba(74, 144, 217, 0.1);
   transition: background-color var(--transicao), border-color var(--transicao);
@@ -168,8 +113,7 @@ img {
   align-items: center;
   gap: 1.5rem;
   list-style: none;
-  margin-left: auto; /* joga tudo pra direita */
-}
+  margin-left: auto; }
 
 .navbar-links a {
   font-weight: 600;
@@ -185,7 +129,6 @@ img {
   background-color: var(--cor-primaria);
 }
 
-/* Botão de alternar dark mode na navbar */
 .btn-tema {
   background: var(--fundo-input);
   margin-left: 1rem;
@@ -219,9 +162,6 @@ body.dark-mode .btn-tema::after {
   transform: translateX(20px);
 }
 
-/* ----------------------------------------------------------
-   6. BOTÕES — Componente reutilizável
-   ---------------------------------------------------------- */
 .btn {
   display: inline-flex;
   align-items: center;
@@ -238,7 +178,6 @@ body.dark-mode .btn-tema::after {
   white-space: nowrap;
 }
 
-/* Botão principal (azul cheio) */
 .btn-primario {
   background-color: var(--cor-acento);
   color: #ffffff;
@@ -246,11 +185,9 @@ body.dark-mode .btn-tema::after {
 
 .btn-primario:hover {
   background-color: var(--cor-acento-dark);
-  transform: translateY(-2px);  /* Sobe levemente ao passar o mouse */
-  box-shadow: var(--sombra-hover);
+  transform: translateY(-2px);    box-shadow: var(--sombra-hover);
 }
 
-/* Botão secundário (contorno) */
 .btn-secundario {
   background-color: transparent;
   color: var(--cor-acento);
@@ -262,15 +199,11 @@ body.dark-mode .btn-tema::after {
   transform: translateY(-2px);
 }
 
-/* Botão pequeno */
 .btn-sm {
   padding: 0.5rem 1rem;
   font-size: 0.85rem;
 }
 
-/* ----------------------------------------------------------
-   7. CARDS — Componente reutilizável
-   ---------------------------------------------------------- */
 .card {
   background-color: var(--fundo-card);
   border: 1.5px solid var(--borda-cor);
@@ -286,9 +219,6 @@ body.dark-mode .btn-tema::after {
   border-color: var(--cor-primaria-dark);
 }
 
-/* ----------------------------------------------------------
-   8. INPUTS E FORMULÁRIOS — Componente reutilizável
-   ---------------------------------------------------------- */
 .form-grupo {
   display: flex;
   flex-direction: column;
@@ -315,8 +245,7 @@ body.dark-mode .btn-tema::after {
   transition: all var(--transicao);
   width: 100%;
   outline: none;
-  appearance: none; /* Remove estilo padrão do select */
-}
+  appearance: none; }
 
 .form-input:focus,
 .form-select:focus {
@@ -329,9 +258,6 @@ body.dark-mode .btn-tema::after {
   color: var(--texto-placeholder);
 }
 
-/* ----------------------------------------------------------
-   9. TAGS / BADGES — Etiquetas coloridas por área
-   ---------------------------------------------------------- */
 .tag {
   display: inline-flex;
   align-items: center;
@@ -354,9 +280,6 @@ body.dark-mode .tag-negocio { color: #f0c060; }
 body.dark-mode .tag-design  { color: #d080f0; }
 body.dark-mode .tag-outro   { color: #a0a0a0; }
 
-/* ----------------------------------------------------------
-   10. UTILITÁRIOS — Classes auxiliares
-   ---------------------------------------------------------- */
 .container {
   max-width: 1200px;
   margin: 0 auto;
@@ -372,22 +295,19 @@ body.dark-mode .tag-outro   { color: #a0a0a0; }
 .mt-3         { margin-top: 1.5rem; }
 .mb-2         { margin-bottom: 1rem; }
 
-/* Divisor */
 .divisor {
   height: 1px;
   background: var(--borda-cor);
   margin: 1.5rem 0;
 }
 
-/* Alerta / mensagem de feedback */
 .alerta {
   padding: 0.9rem 1.2rem;
   border-radius: var(--radius-md);
   font-weight: 600;
   font-size: 0.9rem;
   margin-bottom: 1rem;
-  display: none; /* Escondido por padrão, JS mostra quando necessário */
-}
+  display: none; }
 
 .alerta-sucesso {
   background: #d8f5e9;
@@ -404,9 +324,6 @@ body.dark-mode .tag-outro   { color: #a0a0a0; }
 body.dark-mode .alerta-sucesso { background: #1a3a2a; color: #60d0a0; }
 body.dark-mode .alerta-erro    { background: #3a1a1a; color: #f08080; }
 
-/* ----------------------------------------------------------
-   11. RODAPÉ
-   ---------------------------------------------------------- */
 footer {
   background-color: var(--fundo-navbar);
   border-top: 2px solid var(--borda-cor);
@@ -422,10 +339,6 @@ footer strong {
   color: var(--cor-acento);
 }
 
-/* ----------------------------------------------------------
-   12. ANIMAÇÕES
-   ---------------------------------------------------------- */
-/* Fade in: elemento aparece suavemente */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -435,19 +348,14 @@ footer strong {
   animation: fadeIn 0.5s ease forwards;
 }
 
-/* Pulso suave para elementos de destaque */
 @keyframes pulso {
   0%, 100% { transform: scale(1); }
   50%       { transform: scale(1.04); }
 }
 
-/* ----------------------------------------------------------
-   13. RESPONSIVIDADE — Telas menores
-   ---------------------------------------------------------- */
 @media (max-width: 768px) {
   .navbar-links {
-    display: none; /* Em mobile escondemos os links (simplificado) */
-  }
+    display: none;   }
 
   .navbar {
     padding: 0 1rem;

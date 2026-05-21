@@ -1,9 +1,5 @@
 <!DOCTYPE html>
-<!--
-  ESTAGIANDO — Página de Login (pages/login.html)
-  Descrição: Tela dividida para login de Estudante e Empresa.
-             Inclui cadastro e alternância entre os dois perfis.
--->
+
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
@@ -11,13 +7,11 @@
   <title>Estagiando — Entrar</title>
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
 
-  <!-- Volta um nível para pegar o CSS (estamos dentro de /pages/) -->
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/login.css" />
 </head>
 <body>
 
-  <!-- Navbar mínima -->
   <nav class="navbar">
     <a href="../index.html" class="navbar-logo">Estagi<span>ando</span> 🎓</a>
     <div style="display:flex;align-items:center;gap:1rem">
@@ -26,12 +20,8 @@
     </div>
   </nav>
 
-  <!-- =====================================================
-       LAYOUT PRINCIPAL: dois painéis lado a lado
-       ===================================================== -->
   <main class="login-pagina">
 
-    <!-- PAINEL ESQUERDO — Decorativo (some em mobile) -->
     <div class="login-painel-esq">
       <div class="login-ilustracao">
         <div class="ilustr-circulo grande"></div>
@@ -42,7 +32,6 @@
           <h2>Conectando<br/>futuros!</h2>
           <p>A plataforma que liga estudantes às melhores oportunidades de estágio.</p>
 
-          <!-- Mini cards flutuantes decorativos -->
           <div class="mini-card">
             <span>🎓</span> Estudantes conectados
           </div>
@@ -53,11 +42,9 @@
       </div>
     </div>
 
-    <!-- PAINEL DIREITO — Formulário de login/cadastro -->
     <div class="login-painel-dir">
       <div class="login-form-container card animar-entrada">
 
-        <!-- ABAS: Login ou Cadastro -->
         <div class="abas">
           <button class="aba ativo" id="aba-login" onclick="mostrarAba('login')">
             Entrar
@@ -67,12 +54,8 @@
           </button>
         </div>
 
-        <!-- Alerta de feedback -->
         <div id="alerta-login" class="alerta"></div>
 
-        <!-- =====================================================
-             FORMULÁRIO DE LOGIN
-             ===================================================== -->
         <div id="form-login">
           <div class="form-grupo">
             <label class="form-label" for="login-email">E-mail</label>
@@ -109,12 +92,8 @@
           </p>
         </div>
 
-        <!-- =====================================================
-             FORMULÁRIO DE CADASTRO
-             ===================================================== -->
         <div id="form-cadastro" style="display:none">
 
-          <!-- Campo: Nome -->
           <div class="form-grupo">
             <label class="form-label" for="cad-nome" id="label-nome">Nome completo</label>
             <input
@@ -125,7 +104,6 @@
             />
           </div>
 
-          <!-- Campo: E-mail -->
           <div class="form-grupo">
             <label class="form-label" for="cad-email">E-mail</label>
             <input
@@ -138,7 +116,6 @@
             <span id="feedback-email" style="font-size:0.8rem;margin-top:0.2rem;display:none"></span>
           </div>
 
-          <!-- Campo: CPF (apenas estudante) -->
           <div class="form-grupo" id="campo-cpf">
             <label class="form-label" for="cad-cpf">CPF</label>
             <input
@@ -152,7 +129,6 @@
             <span id="feedback-cpf" style="font-size:0.8rem;margin-top:0.2rem;display:none"></span>
           </div>
 
-          <!-- Campo: Senha -->
           <div class="form-grupo">
             <label class="form-label" for="cad-senha">Senha</label>
             <div class="input-senha-wrapper">
@@ -168,7 +144,6 @@
             </div>
           </div>
 
-          <!-- Campo extra para estudante: área de interesse -->
           <div class="form-grupo" id="campo-area" >
             <label class="form-label" for="cad-area">Área de interesse</label>
             <select class="form-select" id="cad-area">
@@ -181,13 +156,9 @@
             </select>
           </div>
 
-          <!-- =====================================================
-               ENDEREÇO COM BUSCA DE CEP
-               ===================================================== -->
           <div class="divisor" style="margin: 1rem 0 1.2rem"></div>
           <p class="form-label" style="margin-bottom:1rem;font-size:0.95rem;color:var(--texto-principal)">📍 Endereço</p>
 
-          <!-- CEP + botão buscar -->
           <div class="form-grupo">
             <label class="form-label" for="cad-cep">CEP</label>
             <div style="display:flex;gap:0.6rem;align-items:center">
@@ -260,16 +231,12 @@
 
   </main>
 
-  <!-- =====================================================
-       BOTÃO FLUTUANTE DE ACESSIBILIDADE
-       ===================================================== -->
   <div class="acess-widget" id="acess-widget">
-    <!-- Botão principal -->
+    
     <button class="acess-btn-principal" id="acess-toggle" onclick="toggleAcessWidget()" aria-label="Opções de acessibilidade" title="Acessibilidade">
       ♿
     </button>
 
-    <!-- Painel expandido -->
     <div class="acess-painel" id="acess-painel" aria-hidden="true">
       <div class="acess-painel-titulo">Acessibilidade</div>
 
@@ -289,8 +256,7 @@
   <script src="../js/main.js"></script>
   <script src="../js/login.js"></script>
   <script>
-    /* ── Máscara de CEP: 00000-000 ── */
-    function mascararCep(input) {
+        function mascararCep(input) {
       let v = input.value.replace(/\D/g, '').substring(0, 8);
       if (v.length > 5) v = v.substring(0, 5) + '-' + v.substring(5);
       input.value = v;
@@ -344,8 +310,7 @@
       }
     }
 
-    /* Permite buscar pressionando Enter no campo de CEP */
-    document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function () {
       var inputCep = document.getElementById('cad-cep');
       if (inputCep) {
         inputCep.addEventListener('keydown', function(e) {
@@ -354,8 +319,7 @@
       }
     });
 
-    /* ── Olho — mostrar/ocultar senha ── */
-    function alternarSenha(inputId, btn) {
+        function alternarSenha(inputId, btn) {
       var input = document.getElementById(inputId);
       var mostrar = input.type === 'password';
       input.type = mostrar ? 'text' : 'password';
@@ -363,8 +327,7 @@
       btn.title = mostrar ? 'Ocultar senha' : 'Mostrar senha';
     }
 
-    /* ── Acessibilidade: tamanho de fonte ── */
-    var nivelFonte = 0; // -2 a +4 (passos de 10%)
+        var nivelFonte = 0; 
 
     function toggleAcessWidget() {
       var painel = document.getElementById('acess-painel');
@@ -374,7 +337,6 @@
       btn.classList.toggle('ativo', aberto);
     }
 
-    // Fecha o painel ao clicar fora
     document.addEventListener('click', function(e) {
       var widget = document.getElementById('acess-widget');
       if (widget && !widget.contains(e.target)) {
@@ -398,7 +360,6 @@
       localStorage.removeItem('estagiando-fonte');
     }
 
-    // Restaura preferência salva ao carregar
     (function restaurarFonte() {
       var salvo = localStorage.getItem('estagiando-fonte');
       if (salvo !== null) {
@@ -412,8 +373,7 @@
   </script>
 
   <script>
-    /* ── Widget de acessibilidade arrastável ── */
-    (function() {
+        (function() {
       const widget = document.getElementById('acess-widget');
       if (!widget) return;
 
@@ -422,7 +382,7 @@
       let iniX, iniY, iniLeft, iniTop;
 
       widget.addEventListener('mousedown', function(e) {
-        // Não inicia arraste se clicou dentro do painel (fora do botão principal)
+        
         if (e.target.closest('.acess-painel') && !e.target.closest('#acess-toggle')) return;
 
         arrastando = true;
@@ -456,7 +416,6 @@
         widget.classList.remove('arrastando');
       });
 
-      // Bloqueia o clique se houve arraste
       const btn = document.getElementById('acess-toggle');
       if (btn) {
         btn.addEventListener('click', function(e) {
