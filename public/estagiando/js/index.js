@@ -35,13 +35,8 @@ function verificarSessaoNavbar() {
 
     // Define para onde vai o link "Minha Área"
     const linkArea = document.getElementById('link-area-usuario');
-    if (usuario.tipo === 'empresa') {
-      linkArea.href = 'pages/dashboard-empresa.html';
-      linkArea.textContent = '🏢 Minha Empresa';
-    } else {
-      linkArea.href = 'pages/dashboard-estudante.html';
-      linkArea.textContent = '🎓 Meu Perfil';
-    }
+    linkArea.href = 'pages/dashboard-estudante.html';
+    linkArea.textContent = '🎓 Meu Perfil';
   }
 }
 
@@ -252,13 +247,6 @@ function montarAreaCandidatura(usuario, jaCandidatou, vaga) {
         Entrar / Cadastrar
       </a>
     `;
-  }
-
-  // Usuário logado como empresa (não pode se candidatar)
-  if (usuario.tipo === 'empresa') {
-    return `<p style="color:var(--texto-secundario);font-size:0.9rem">
-      Você está logado como empresa. Apenas estudantes podem se candidatar.
-    </p>`;
   }
 
   // Estudante já candidatado
