@@ -37,6 +37,22 @@
       </li>
     </ul>
 
+    <div class="acess-widget" id="acess-widget">
+      <button class="acess-btn-principal" id="acess-toggle" onclick="toggleAcessWidget()" aria-label="Opções de acessibilidade" title="Acessibilidade">♿</button>
+      <div class="acess-painel" id="acess-painel" aria-hidden="true">
+        <div class="acess-painel-titulo">Acessibilidade</div>
+        <div class="acess-opcao">
+          <span class="acess-opcao-label">Tamanho da fonte</span>
+          <div class="acess-font-controles">
+            <button class="acess-font-btn" onclick="alterarFonte(-1)" aria-label="Diminuir fonte" title="Diminuir fonte">A−</button>
+            <span class="acess-font-valor" id="acess-font-valor">100%</span>
+            <button class="acess-font-btn" onclick="alterarFonte(1)" aria-label="Aumentar fonte" title="Aumentar fonte">A+</button>
+          </div>
+        </div>
+        <button class="acess-reset" onclick="resetarAcessibilidade()">↺ Resetar</button>
+      </div>
+    </div>
+
     <button 
       class="btn-tema" 
       onclick="alternarTema()" 
