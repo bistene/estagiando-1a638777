@@ -7,7 +7,6 @@ document.addEventListener('DOMContentLoaded', function () {
   }
 
   renderizarPerfil(usuario);
-  renderizarCandidaturas(usuario);
   renderizarRecomendadas(usuario);
 });
 
@@ -27,44 +26,6 @@ function renderizarPerfil(usuario) {
   }
 
   document.getElementById('stat-vagas-disponiveis').textContent = obterVagas().length;
-}
-
-function renderizarCandidaturas(usuario) {
-  const vagas = obterVagas();
-
-  const minhasVagas = vagas.filter(function (v) {
-    return v.candidatos.some(function (c) { return c.email === usuario.email; });
-  });
-
-  document.getElementById('stat-candidaturas').textContent = minhasVagas.length;
-
-  const lista = document.getElementById('lista-candidaturas');
-
-  if (minhasVagas.length === 0) {
-    lista.innerHTML = `
-      <div class="dash-vazio">
-        <span>📋</span>
-        <p>Você ainda não se candidatou a nenhuma vaga.</p>
-        <a href="../index.html" class="btn btn-primario" style="margin-top:1rem">Ver vagas disponíveis</a>
-      </div>
-    `;
-    return;
-  }
-
-  lista.innerHTML = minhasVagas.map(function (vaga) {
-    const meuDado = vaga.candidatos.find(function (c) { return c.email === usuario.email; });
-    return `
-      <div class="card candidatura-card">
-        <div class="cand-info">
-          <div class="cand-titulo">${vaga.titulo}</div>
-          <div class="cand-empresa">🏢 ${vaga.empresa} · 📍 ${vaga.cidade}, ${vaga.estado}</div>
-        </div>
-        <span class="tag ${classTag(vaga.area)}">${labelArea(vaga.area)}</span>
-        <div class="cand-data">📅 ${meuDado.data || 'Hoje'}</div>
-        <div class="vaga-bolsa" style="font-size:1rem">${formatarMoeda(vaga.bolsa)}<span style="font-size:0.7rem;color:var(--texto-secundario)">/mês</span></div>
-      </div>
-    `;
-  }).join('');
 }
 
 function renderizarRecomendadas(usuario) {
@@ -103,7 +64,7 @@ function renderizarRecomendadas(usuario) {
         </div>
         <div style="display:flex;align-items:center;justify-content:space-between;padding-top:0.8rem;border-top:1px solid var(--borda-cor)">
           <span style="font-weight:800;color:var(--cor-acento)">${formatarMoeda(vaga.bolsa)}<small style="font-weight:600;color:var(--texto-secundario)">/mês</small></span>
-          <a href="../index.html" class="btn btn-primario btn-sm">Ver →</a>
+          <a href="${vaga.linkExterno}" target="_blank" rel="noopener noreferrer" class="btn btn-primario btn-sm">Acessar ↗</a>
         </div>
       </div>
     `;
