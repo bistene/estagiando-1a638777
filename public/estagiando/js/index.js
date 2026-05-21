@@ -70,7 +70,6 @@ function criarCardVaga(vaga, indice) {
     <div class="vaga-info">
       <span class="vaga-info-item">📍 ${vaga.cidade}, ${vaga.estado}</span>
       <span class="vaga-info-item">⏱ ${vaga.cargaHoraria}</span>
-      <span class="vaga-info-item">👥 ${vaga.candidatos.length} candidato${vaga.candidatos.length !== 1 ? 's' : ''}</span>
     </div>
 
     <div class="vaga-rodape">
@@ -132,13 +131,6 @@ function abrirModal(idVaga) {
 
   if (!vaga) return;
 
-  const usuario = obterUsuarioLogado();
-
-  // Verifica se o estudante já se candidatou
-  const jaCandidatou = usuario &&
-    usuario.tipo === 'estudante' &&
-    vaga.candidatos.some(function (c) { return c.email === usuario.email; });
-
   const conteudo = document.getElementById('modal-conteudo');
   conteudo.innerHTML = `
     <span class="tag ${classTag(vaga.area)}" style="margin-bottom:0.8rem">${labelArea(vaga.area)}</span>
@@ -163,113 +155,20 @@ function abrirModal(idVaga) {
       <p>${vaga.descricao}</p>
     </div>
 
-    <!-- Seção de candidatura -->
-    <div class="candidatura-form" id="area-candidatura">
-      ${montarAreaCandidatura(usuario, jaCandidatou, vaga)}
-    </div>
-
-    <!-- Lista de candidatos (visível para todos) -->
-    <div class="candidatos-lista">
-      <div class="modal-secao-titulo" style="margin-bottom:0.8rem">
-        👥 Candidatos (${vaga.candidatos.length})
-      </div>
-      ${montarListaCandidatos(vaga.candidatos)}
+    <div class="candidatura-form">
+      <h3>🚀 Candidate-se diretamente com a empresa</h3>
+      <p style="color:var(--texto-secundario);font-size:0.9rem;margin:0.5rem 0 1rem">
+        O processo seletivo é conduzido pela própria empresa. Clique abaixo para acessar a página oficial da vaga e seguir as instruções de inscrição.
+      </p>
+      <a href="${vaga.linkExterno}" target="_blank" rel="noopener noreferrer" class="btn btn-primario" style="width:100%">
+        Acessar site da empresa ↗
+      </a>
     </div>
   `;
 
   document.getElementById('modal-overlay').classList.add('ativo');
 
   document.body.style.overflow = 'hidden';
-}
-
-function montarAreaCandidatura(usuario, jaCandidatou, vaga) {
-  
-  if (!usuario) {
-    return `
-      <h3>🎓 Quer se candidatar?</h3>
-      <p style="color:var(--texto-secundario);font-size:0.9rem;margin-bottom:1rem">
-        Faça login como estudante para se candidatar a esta vaga.
-      </p>
-      <a href="pages/login.html" class="btn btn-primario" style="width:100%">
-        Entrar / Cadastrar
-      </a>
-    `;
-  }
-
-  if (jaCandidatou) {
-    return `
-      <h3>✅ Candidatura enviada!</h3>
-      <p style="color:var(--texto-secundario);font-size:0.9rem;margin-top:0.5rem">
-        Você já se candidatou a esta vaga. A empresa será notificada.
-      </p>
-    `;
-  }
-
-  return `
-    <h3>🚀 Candidatar-se a esta vaga</h3>
-    <div id="alerta-candidatura" class="alerta"></div>
-    <div class="form-grupo mt-2">
-      <label class="form-label" for="input-mensagem">Mensagem para a empresa (opcional)</label>
-      <textarea
-        class="form-input"
-        id="input-mensagem"
-        rows="3"
-        placeholder="Apresente-se brevemente e diga por que você tem interesse..."
-        style="resize:vertical"
-      ></textarea>
-    </div>
-    <button class="btn btn-primario" style="width:100%" onclick="candidatar()">
-      Enviar candidatura 🚀
-    </button>
-  `;
-}
-
-function montarListaCandidatos(candidatos) {
-  if (candidatos.length === 0) {
-    return '<p style="color:var(--texto-secundario);font-size:0.9rem">Nenhum candidato ainda. Seja o primeiro!</p>';
-  }
-
-  return candidatos.map(function (c) {
-    
-    const iniciais = c.nome.split(' ').map(function (p) { return p[0]; }).join('').substring(0, 2).toUpperCase();
-    return `
-      <div class="candidato-item">
-        <div class="candidato-avatar">${iniciais}</div>
-        <span>${c.nome}</span>
-      </div>
-    `;
-  }).join('');
-}
-
-/**
- * candidatar()
- * Registra a candidatura do estudante na vaga atual.
- */
-function candidatar() {
-  const usuario = obterUsuarioLogado();
-  if (!usuario || usuario.tipo !== 'estudante') return;
-
-  const vagas = obterVagas();
-  const indice = vagas.findIndex(function (v) { return v.id === vagaAtualId; });
-
-  if (indice === -1) return;
-
-  const mensagem = document.getElementById('input-mensagem').value;
-
-  vagas[indice].candidatos.push({
-    nome:      usuario.nome,
-    email:     usuario.email,
-    mensagem:  mensagem,
-    data:      new Date().toLocaleDateString('pt-BR')
-  });
-
-  salvarVagas(vagas);
-
-  mostrarAlerta('Candidatura enviada com sucesso! 🎉 A empresa foi notificada.', 'sucesso', 'alerta-candidatura');
-
-  setTimeout(function () {
-    abrirModal(vagaAtualId);
-  }, 1500);
 }
 
 function fecharModal() {
