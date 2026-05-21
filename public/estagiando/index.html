@@ -1,29 +1,20 @@
 <!DOCTYPE html>
-<!--
-  ESTAGIANDO — Página Principal (index.html)
-  Descrição: Exibe as vagas de estágio com filtros por estado e área.
-  Arquivos usados: css/style.css, css/index.css, js/main.js, js/index.js
--->
+
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <!-- Faz o site funcionar bem em celulares -->
+  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Estagiando — Encontre seu Estágio</title>
 
-  <!-- Ícone da aba do navegador (emoji como favicon) -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
 
-  <!-- Folha de estilos global -->
   <link rel="stylesheet" href="css/style.css" />
-  <!-- Folha de estilos específica desta página -->
+  
   <link rel="stylesheet" href="css/index.css" />
 </head>
 <body>
 
-  <!-- =====================================================
-       NAVBAR — Barra de Navegação Superior
-       ===================================================== -->
   <nav class="navbar">
   <a href="index.html" class="navbar-logo">
     Estagi<span>ando</span> 🎓
@@ -46,7 +37,6 @@
       </li>
     </ul>
 
-    <!-- Botão de tema agora junto com os outros -->
     <button 
       class="btn-tema" 
       onclick="alternarTema()" 
@@ -55,9 +45,7 @@
     </button>
   </div>
 </nav>
-  <!-- =====================================================
-       HERO — Seção de Boas-Vindas
-       ===================================================== -->
+  
   <section class="hero">
     <div class="container">
       <div class="hero-conteudo animar-entrada">
@@ -71,7 +59,6 @@
           em todo o Brasil. Simples, rápido e gratuito para estudantes!
         </p>
 
-        <!-- Números de destaque -->
         <div class="hero-stats">
           <div class="stat-item">
             <span class="stat-numero" id="total-vagas">0</span>
@@ -91,14 +78,10 @@
       </div>
     </div>
 
-    <!-- Decoração de fundo (bolhas azuis) -->
     <div class="hero-blob hero-blob-1"></div>
     <div class="hero-blob hero-blob-2"></div>
   </section>
 
-  <!-- =====================================================
-       FILTROS — Busca por estado e área
-       ===================================================== -->
   <section class="secao-filtros">
     <div class="container">
       <div class="filtros-card card animar-entrada">
@@ -106,7 +89,6 @@
 
         <div class="filtros-grid">
 
-          <!-- Filtro por Estado -->
           <div class="form-grupo">
             <label class="form-label" for="filtro-estado">📍 Estado</label>
             <select class="form-select" id="filtro-estado" onchange="aplicarFiltros()">
@@ -141,7 +123,6 @@
             </select>
           </div>
 
-          <!-- Filtro por Área -->
           <div class="form-grupo">
             <label class="form-label" for="filtro-area">🎯 Área de Atuação</label>
             <select class="form-select" id="filtro-area" onchange="aplicarFiltros()">
@@ -154,7 +135,6 @@
             </select>
           </div>
 
-          <!-- Botão de limpar filtros -->
           <div class="form-grupo filtros-acao">
             <label class="form-label" style="opacity:0">ação</label>
             <button class="btn btn-secundario" onclick="limparFiltros()">
@@ -167,24 +147,18 @@
     </div>
   </section>
 
-  <!-- =====================================================
-       LISTAGEM DE VAGAS
-       ===================================================== -->
   <main class="secao-vagas">
     <div class="container">
 
-      <!-- Cabeçalho da lista -->
       <div class="vagas-cabecalho">
         <h2 class="vagas-titulo">Vagas disponíveis</h2>
         <span class="vagas-contador" id="contador-vagas">Carregando...</span>
       </div>
 
-      <!-- Grade de cards das vagas (preenchida pelo JS) -->
       <div class="vagas-grid" id="lista-vagas">
-        <!-- Os cards são gerados dinamicamente pelo index.js -->
+        
       </div>
 
-      <!-- Mensagem exibida quando nenhuma vaga é encontrada -->
       <div class="vagas-vazio" id="vagas-vazio" style="display:none">
         <span class="vazio-emoji">😕</span>
         <h3>Nenhuma vaga encontrada</h3>
@@ -194,29 +168,21 @@
     </div>
   </main>
 
-  <!-- =====================================================
-       MODAL — Candidatura
-       Aparece quando o estudante clica em "Candidatar-se"
-       ===================================================== -->
   <div class="modal-overlay" id="modal-overlay" onclick="fecharModal()">
     <div class="modal" onclick="event.stopPropagation()">
       <button class="modal-fechar" onclick="fecharModal()">✕</button>
 
       <div id="modal-conteudo">
-        <!-- Preenchido dinamicamente pelo JS -->
+        
       </div>
     </div>
   </div>
 
-  <!-- =====================================================
-       RODAPÉ
-       ===================================================== -->
   <footer>
     <p>feito pelo soprad <strong>Estagiando</strong> &copy; 2025</p>
     <p style="margin-top:0.4rem; font-size:0.8rem;">Projeto acadêmico · Apenas front-end</p>
   </footer>
 
-  <!-- Scripts: carrega o JS principal e depois o da página -->
   <script src="js/main.js"></script>
   <script src="js/index.js"></script>
 </body>

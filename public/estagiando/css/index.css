@@ -1,17 +1,6 @@
-/* ==========================================================
-   ESTAGIANDO — Estilos da Página Principal
-   Arquivo: css/index.css
-   Descrição: Estilos específicos da index.html:
-              hero, filtros, cards de vagas e modal.
-   ========================================================== */
-
-/* ----------------------------------------------------------
-   1. HERO — Seção de destaque no topo
-   ---------------------------------------------------------- */
 .hero {
   position: relative;
-  overflow: hidden;               /* Evita que as bolhas saiam da área */
-  padding: 5rem 0 4rem;
+  overflow: hidden;                 padding: 5rem 0 4rem;
   background: linear-gradient(
     135deg,
     var(--cor-primaria) 0%,
@@ -21,11 +10,9 @@
 
 .hero-conteudo {
   position: relative;
-  z-index: 2;                     /* Fica na frente das bolhas decorativas */
-  text-align: center;
+  z-index: 2;                       text-align: center;
 }
 
-/* Etiqueta pequena no topo do hero */
 .hero-badge {
   display: inline-block;
   background: var(--cor-acento);
@@ -40,21 +27,18 @@
 
 .hero-titulo {
   font-family: var(--fonte-titulo);
-  font-size: clamp(2rem, 5vw, 3.5rem); /* Tamanho responsivo */
-  font-weight: 800;
+  font-size: clamp(2rem, 5vw, 3.5rem);   font-weight: 800;
   line-height: 1.1;
   color: var(--texto-principal);
   margin-bottom: 1rem;
 }
 
-/* Palavra em destaque no título */
 .hero-destaque {
   color: var(--cor-acento);
   position: relative;
   display: inline-block;
 }
 
-/* Sublinhado decorativo */
 .hero-destaque::after {
   content: '';
   position: absolute;
@@ -74,7 +58,6 @@
   line-height: 1.7;
 }
 
-/* Números de estatísticas */
 .hero-stats {
   display: inline-flex;
   align-items: center;
@@ -114,13 +97,11 @@
   background: var(--borda-cor);
 }
 
-/* Bolhas decorativas de fundo */
 .hero-blob {
   position: absolute;
   border-radius: 50%;
   opacity: 0.35;
-  pointer-events: none;           /* Não interfere nos cliques */
-}
+  pointer-events: none;           }
 
 .hero-blob-1 {
   width: 400px;
@@ -138,9 +119,6 @@
   left: -60px;
 }
 
-/* ----------------------------------------------------------
-   2. FILTROS
-   ---------------------------------------------------------- */
 .secao-filtros {
   padding: 2rem 0;
 }
@@ -156,7 +134,6 @@
   color: var(--texto-principal);
 }
 
-/* Grade dos filtros: 3 colunas em telas grandes */
 .filtros-grid {
   display: grid;
   grid-template-columns: 1fr 1fr auto;
@@ -174,9 +151,6 @@
   }
 }
 
-/* ----------------------------------------------------------
-   3. LISTAGEM DE VAGAS
-   ---------------------------------------------------------- */
 .secao-vagas {
   padding: 0 0 3rem;
 }
@@ -203,16 +177,12 @@
   font-size: 0.85rem;
 }
 
-/* Grade responsiva de cards */
 .vagas-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
   gap: 1.5rem;
 }
 
-/* ----------------------------------------------------------
-   4. CARD DE VAGA
-   ---------------------------------------------------------- */
 .vaga-card {
   display: flex;
   flex-direction: column;
@@ -261,8 +231,7 @@
   font-size: 0.9rem;
   color: var(--texto-secundario);
   line-height: 1.6;
-  /* Limita a 2 linhas com reticências */
-  display: -webkit-box;
+    display: -webkit-box;
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
@@ -291,9 +260,6 @@
   margin-top: auto;
 }
 
-/* ----------------------------------------------------------
-   5. ESTADO VAZIO
-   ---------------------------------------------------------- */
 .vagas-vazio {
   text-align: center;
   padding: 4rem 2rem;
@@ -319,26 +285,18 @@
   text-decoration: underline;
 }
 
-/* ----------------------------------------------------------
-   6. MODAL — Detalhes e candidatura
-   ---------------------------------------------------------- */
-
-/* Fundo escurecido por trás do modal */
 .modal-overlay {
   position: fixed;
-  inset: 0;                       /* Cobre a tela inteira */
-  background: rgba(0, 0, 0, 0.5);
+  inset: 0;                         background: rgba(0, 0, 0, 0.5);
   z-index: 200;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 1rem;
   opacity: 0;
-  pointer-events: none;           /* Desabilitado quando invisível */
-  transition: opacity var(--transicao);
+  pointer-events: none;             transition: opacity var(--transicao);
 }
 
-/* Classe adicionada pelo JS para mostrar o modal */
 .modal-overlay.ativo {
   opacity: 1;
   pointer-events: all;
@@ -435,7 +393,6 @@
   color: var(--cor-acento);
 }
 
-/* Área de candidatura dentro do modal */
 .candidatura-form {
   background: var(--fundo-input);
   border-radius: var(--radius-md);
@@ -449,7 +406,6 @@
   margin-bottom: 1rem;
 }
 
-/* Lista de candidatos já inscritos */
 .candidatos-lista {
   margin-top: 1rem;
 }

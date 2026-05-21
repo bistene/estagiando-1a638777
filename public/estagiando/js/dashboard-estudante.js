@@ -1,10 +1,5 @@
-/* ==========================================================
-   ESTAGIANDO — JavaScript do Dashboard do Estudante
-   Arquivo: js/dashboard-estudante.js
-   ========================================================== */
-
 document.addEventListener('DOMContentLoaded', function () {
-  // Verifica se o usuário está logado como estudante
+  
   const usuario = obterUsuarioLogado();
   if (!usuario || usuario.tipo !== 'estudante') {
     window.location.href = 'login.html';
@@ -17,13 +12,12 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 function renderizarPerfil(usuario) {
-  // Avatar: primeiras letras do nome
+  
   const iniciais = usuario.nome.split(' ').map(function (p) { return p[0]; }).join('').substring(0, 2).toUpperCase();
   document.getElementById('perfil-avatar').textContent = iniciais;
   document.getElementById('perfil-nome').textContent  = usuario.nome;
   document.getElementById('perfil-email').textContent = usuario.email;
 
-  // Tag da área
   const tagArea = document.getElementById('perfil-area-tag');
   if (usuario.area) {
     tagArea.textContent  = labelArea(usuario.area);
@@ -32,14 +26,12 @@ function renderizarPerfil(usuario) {
     tagArea.style.display = 'none';
   }
 
-  // Stat: total de vagas disponíveis
   document.getElementById('stat-vagas-disponiveis').textContent = obterVagas().length;
 }
 
 function renderizarCandidaturas(usuario) {
   const vagas = obterVagas();
 
-  // Encontra vagas em que o estudante se candidatou
   const minhasVagas = vagas.filter(function (v) {
     return v.candidatos.some(function (c) { return c.email === usuario.email; });
   });
