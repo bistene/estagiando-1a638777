@@ -47,7 +47,7 @@
             <span>🎓</span> Estudantes conectados
           </div>
           <div class="mini-card" style="margin-left:2rem;margin-top:0.6rem">
-            <span>🏢</span> Empresas parceiras
+            <span>🚀</span> Oportunidades de estágio
           </div>
         </div>
       </div>
@@ -56,24 +56,6 @@
     <!-- PAINEL DIREITO — Formulário de login/cadastro -->
     <div class="login-painel-dir">
       <div class="login-form-container card animar-entrada">
-
-        <!-- SELETOR DE PERFIL: Estudante ou Empresa -->
-        <div class="perfil-selector">
-          <button
-            class="perfil-btn ativo"
-            id="btn-estudante"
-            onclick="selecionarPerfil('estudante')"
-          >
-            🎓 Estudante
-          </button>
-          <button
-            class="perfil-btn"
-            id="btn-empresa"
-            onclick="selecionarPerfil('empresa')"
-          >
-            🏢 Empresa
-          </button>
-        </div>
 
         <!-- ABAS: Login ou Cadastro -->
         <div class="abas">
@@ -197,18 +179,6 @@
               <option value="negocios">💼 Negócios / Administração</option>
               <option value="outros">📚 Outros</option>
             </select>
-          </div>
-
-          <!-- Campo extra para empresa: CNPJ (aparece somente para empresa) -->
-          <div class="form-grupo" id="campo-cnpj" style="display:none">
-            <label class="form-label" for="cad-cnpj">CNPJ da empresa</label>
-            <input
-              class="form-input"
-              type="text"
-              id="cad-cnpj"
-              placeholder="00.000.000/0001-00"
-              maxlength="18"
-            />
           </div>
 
           <!-- =====================================================
