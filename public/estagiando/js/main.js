@@ -52,7 +52,7 @@ const vagasIniciais = [
     bolsa: 800,
     cargaHoraria: '20h/semana',
     descricao: 'Estágio em desenvolvimento front-end com HTML, CSS e JavaScript. Ambiente jovem e descontraído!',
-    candidatos: []
+    linkExterno: 'https://www.techbrasil.com.br/carreiras'
   },
   {
     id: 2,
@@ -64,7 +64,7 @@ const vagasIniciais = [
     bolsa: 700,
     cargaHoraria: '30h/semana',
     descricao: 'Acompanhamento de procedimentos, apoio à equipe médica e atendimento ao paciente.',
-    candidatos: []
+    linkExterno: 'https://www.hospitalsaolucas.com.br/trabalhe-conosco'
   },
   {
     id: 3,
@@ -76,7 +76,7 @@ const vagasIniciais = [
     bolsa: 750,
     cargaHoraria: '20h/semana',
     descricao: 'Criação de peças visuais para redes sociais, identidade visual e materiais gráficos.',
-    candidatos: []
+    linkExterno: 'https://www.agenciacriativa.com.br/vagas'
   },
   {
     id: 4,
@@ -88,7 +88,7 @@ const vagasIniciais = [
     bolsa: 650,
     cargaHoraria: '20h/semana',
     descricao: 'Suporte administrativo, controle de planilhas, atendimento e organização de documentos.',
-    candidatos: []
+    linkExterno: 'https://www.contabilidadeexpress.com.br/carreiras'
   },
   {
     id: 5,
@@ -100,7 +100,7 @@ const vagasIniciais = [
     bolsa: 900,
     cargaHoraria: '30h/semana',
     descricao: 'Suporte técnico a usuários, instalação de softwares, manutenção de computadores.',
-    candidatos: []
+    linkExterno: 'https://www.infosolucoes.com.br/trabalhe-conosco'
   },
   {
     id: 6,
@@ -112,21 +112,22 @@ const vagasIniciais = [
     bolsa: 850,
     cargaHoraria: '20h/semana',
     descricao: 'Gestão de redes sociais, criação de conteúdo, análise de métricas e campanhas online.',
-    candidatos: []
+    linkExterno: 'https://www.startupconecta.com.br/vagas'
   }
 ];
 
 function obterVagas() {
-  const salvas = localStorage.getItem('estagiando-vagas');
+  const salvas = localStorage.getItem('estagiando-vagas-v2');
   return salvas ? JSON.parse(salvas) : vagasIniciais;
 }
 
 function salvarVagas(vagas) {
-  localStorage.setItem('estagiando-vagas', JSON.stringify(vagas));
+  localStorage.setItem('estagiando-vagas-v2', JSON.stringify(vagas));
 }
 
 function inicializarVagas() {
-  if (!localStorage.getItem('estagiando-vagas')) {
+  if (!localStorage.getItem('estagiando-vagas-v2')) {
+    localStorage.removeItem('estagiando-vagas');
     salvarVagas(vagasIniciais);
   }
 }
