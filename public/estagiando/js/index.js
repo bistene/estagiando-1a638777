@@ -131,6 +131,8 @@ function abrirModal(idVaga) {
 
   if (!vaga) return;
 
+  const usuario = obterUsuarioLogado();
+
   const conteudo = document.getElementById('modal-conteudo');
   conteudo.innerHTML = `
     <span class="tag ${classTag(vaga.area)}" style="margin-bottom:0.8rem">${labelArea(vaga.area)}</span>
@@ -156,13 +158,23 @@ function abrirModal(idVaga) {
     </div>
 
     <div class="candidatura-form">
-      <h3>🚀 Candidate-se diretamente com a empresa</h3>
-      <p style="color:var(--texto-secundario);font-size:0.9rem;margin:0.5rem 0 1rem">
-        O processo seletivo é conduzido pela própria empresa. Clique abaixo para acessar a página oficial da vaga e seguir as instruções de inscrição.
-      </p>
-      <a href="${vaga.linkExterno}" target="_blank" rel="noopener noreferrer" class="btn btn-primario" style="width:100%">
-        Acessar site da empresa ↗
-      </a>
+      ${usuario ? `
+        <h3>🚀 Candidate-se diretamente com a empresa</h3>
+        <p style="color:var(--texto-secundario);font-size:0.9rem;margin:0.5rem 0 1rem">
+          O processo seletivo é conduzido pela própria empresa. Clique abaixo para acessar a página oficial da vaga e seguir as instruções de inscrição.
+        </p>
+        <a href="${vaga.linkExterno}" target="_blank" rel="noopener noreferrer" class="btn btn-primario" style="width:100%">
+          Acessar site da empresa ↗
+        </a>
+      ` : `
+        <h3>🔒 Entre para acessar a vaga</h3>
+        <p style="color:var(--texto-secundario);font-size:0.9rem;margin:0.5rem 0 1rem">
+          Faça login ou crie sua conta gratuita para acessar o site da empresa e se candidatar.
+        </p>
+        <a href="pages/login.html" class="btn btn-primario" style="width:100%">
+          Entrar / Cadastrar
+        </a>
+      `}
     </div>
   `;
 
