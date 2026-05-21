@@ -159,3 +159,54 @@ function classTag(area) {
   };
   return mapa[area] || 'tag-outro';
 }
+
+var nivelFonte = 0;
+
+function toggleAcessWidget() {
+  const painel = document.getElementById('acess-painel');
+  const btn    = document.getElementById('acess-toggle');
+  if (!painel || !btn) return;
+  const aberto = painel.classList.toggle('ativo');
+  painel.setAttribute('aria-hidden', !aberto);
+  btn.classList.toggle('ativo', aberto);
+}
+
+function alterarFonte(direcao) {
+  nivelFonte = Math.max(-2, Math.min(4, nivelFonte + direcao));
+  const porcentagem = 100 + (nivelFonte * 10);
+  document.documentElement.style.fontSize = porcentagem + '%';
+  const el = document.getElementById('acess-font-valor');
+  if (el) el.textContent = porcentagem + '%';
+  localStorage.setItem('estagiando-fonte', nivelFonte);
+}
+
+function resetarAcessibilidade() {
+  nivelFonte = 0;
+  document.documentElement.style.fontSize = '';
+  const el = document.getElementById('acess-font-valor');
+  if (el) el.textContent = '100%';
+  localStorage.removeItem('estagiando-fonte');
+}
+
+(function restaurarFonte() {
+  const salvo = localStorage.getItem('estagiando-fonte');
+  if (salvo !== null) {
+    nivelFonte = parseInt(salvo);
+    const porcentagem = 100 + (nivelFonte * 10);
+    document.documentElement.style.fontSize = porcentagem + '%';
+    document.addEventListener('DOMContentLoaded', function () {
+      const el = document.getElementById('acess-font-valor');
+      if (el) el.textContent = porcentagem + '%';
+    });
+  }
+})();
+
+document.addEventListener('click', function (e) {
+  const widget = document.getElementById('acess-widget');
+  if (widget && !widget.contains(e.target)) {
+    const painel = document.getElementById('acess-painel');
+    const btn    = document.getElementById('acess-toggle');
+    if (painel) painel.classList.remove('ativo');
+    if (btn) btn.classList.remove('ativo');
+  }
+});
