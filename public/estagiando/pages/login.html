@@ -410,5 +410,63 @@
       }
     })();
   </script>
+
+  <script>
+    /* ── Widget de acessibilidade arrastável ── */
+    (function() {
+      const widget = document.getElementById('acess-widget');
+      if (!widget) return;
+
+      let arrastando = false;
+      let moveu = false;
+      let iniX, iniY, iniLeft, iniTop;
+
+      widget.addEventListener('mousedown', function(e) {
+        // Não inicia arraste se clicou dentro do painel (fora do botão principal)
+        if (e.target.closest('.acess-painel') && !e.target.closest('#acess-toggle')) return;
+
+        arrastando = true;
+        moveu = false;
+        iniX = e.clientX;
+        iniY = e.clientY;
+
+        const rect = widget.getBoundingClientRect();
+        iniLeft = rect.left;
+        iniTop  = rect.top;
+
+        widget.classList.add('arrastando');
+        e.preventDefault();
+      });
+
+      document.addEventListener('mousemove', function(e) {
+        if (!arrastando) return;
+        const dx = e.clientX - iniX;
+        const dy = e.clientY - iniY;
+        if (Math.abs(dx) > 2 || Math.abs(dy) > 2) moveu = true;
+
+        widget.style.left = (iniLeft + dx) + 'px';
+        widget.style.top  = (iniTop  + dy) + 'px';
+        widget.style.bottom = 'auto';
+        widget.style.right  = 'auto';
+      });
+
+      document.addEventListener('mouseup', function() {
+        if (!arrastando) return;
+        arrastando = false;
+        widget.classList.remove('arrastando');
+      });
+
+      // Bloqueia o clique se houve arraste
+      const btn = document.getElementById('acess-toggle');
+      if (btn) {
+        btn.addEventListener('click', function(e) {
+          if (moveu) {
+            e.stopPropagation();
+            moveu = false;
+          }
+        });
+      }
+    })();
+  </script>
 </body>
 </html>
