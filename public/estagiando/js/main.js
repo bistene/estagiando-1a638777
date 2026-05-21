@@ -34,6 +34,8 @@ function mostrarAlerta(mensagem, tipo, elementoId) {
   alerta.textContent = mensagem;
   alerta.style.display = 'block';
 
+  alerta.scrollIntoView({ behavior: 'smooth', block: 'center' });
+
   setTimeout(() => {
     alerta.style.display = 'none';
   }, 4000);
