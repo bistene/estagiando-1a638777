@@ -8,39 +8,8 @@
 /* ----------------------------------------------------------
    ESTADO LOCAL DA PÁGINA
    ---------------------------------------------------------- */
-let perfilAtual = 'estudante'; // 'estudante' ou 'empresa'
-
-/* ----------------------------------------------------------
-   1. SELETOR DE PERFIL
-   ---------------------------------------------------------- */
-
-/**
- * selecionarPerfil(perfil)
- * Troca entre o formulário de estudante e empresa.
- * Mostra/esconde campos específicos de cada perfil.
- */
-function selecionarPerfil(perfil) {
-  perfilAtual = perfil;
-
-  // Atualiza os botões do seletor
-  document.getElementById('btn-estudante').classList.toggle('ativo', perfil === 'estudante');
-  document.getElementById('btn-empresa').classList.toggle('ativo', perfil === 'empresa');
-
-  // Atualiza o label do nome
-  const labelNome = document.getElementById('label-nome');
-  if (perfil === 'empresa') {
-    labelNome.textContent = 'Nome da empresa';
-    document.getElementById('cad-nome').placeholder = 'Razão social ou nome fantasia';
-  } else {
-    labelNome.textContent = 'Nome completo';
-    document.getElementById('cad-nome').placeholder = 'Seu nome';
-  }
-
-  // Mostra/esconde campos exclusivos
-  document.getElementById('campo-area').style.display  = perfil === 'estudante' ? 'flex' : 'none';
-  document.getElementById('campo-cnpj').style.display  = perfil === 'empresa'   ? 'flex' : 'none';
-  document.getElementById('campo-cpf').style.display   = perfil === 'estudante' ? 'flex' : 'none';
-}
+// Apenas estudantes podem se cadastrar/entrar nesta plataforma.
+const perfilAtual = 'estudante';
 
 /* ----------------------------------------------------------
    2. ABAS (Login / Cadastro)
@@ -85,7 +54,7 @@ function fazerLogin() {
   // Busca o usuário nos cadastros salvos
   const usuarios = obterUsuarios();
   const usuario  = usuarios.find(function (u) {
-    return u.email === email && u.senha === senha && u.tipo === perfilAtual;
+    return u.email === email && u.senha === senha && u.tipo === 'estudante';
   });
 
   if (!usuario) {
@@ -98,11 +67,7 @@ function fazerLogin() {
   mostrarAlerta('Login realizado! Redirecionando...', 'sucesso', 'alerta-login');
 
   setTimeout(function () {
-    if (usuario.tipo === 'empresa') {
-      window.location.href = 'dashboard-empresa.html';
-    } else {
-      window.location.href = 'dashboard-estudante.html';
-    }
+    window.location.href = 'dashboard-estudante.html';
   }, 1000);
 }
 
@@ -137,19 +102,17 @@ function fazerCadastro() {
     return;
   }
 
-  // Validação de CPF (somente para estudante)
-  if (perfilAtual === 'estudante') {
-    const cpf = document.getElementById('cad-cpf').value;
-    if (!cpf) {
-      mostrarAlerta('O CPF é obrigatório para estudantes.', 'erro', 'alerta-login');
-      document.getElementById('cad-cpf').focus();
-      return;
-    }
-    if (!validarCpf(cpf)) {
-      mostrarAlerta('CPF inválido. Verifique os números digitados.', 'erro', 'alerta-login');
-      document.getElementById('cad-cpf').focus();
-      return;
-    }
+  // Validação de CPF
+  const cpf = document.getElementById('cad-cpf').value;
+  if (!cpf) {
+    mostrarAlerta('O CPF é obrigatório.', 'erro', 'alerta-login');
+    document.getElementById('cad-cpf').focus();
+    return;
+  }
+  if (!validarCpf(cpf)) {
+    mostrarAlerta('CPF inválido. Verifique os números digitados.', 'erro', 'alerta-login');
+    document.getElementById('cad-cpf').focus();
+    return;
   }
 
   // Verifica se o e-mail já está cadastrado
@@ -164,17 +127,12 @@ function fazerCadastro() {
     nome:  nome,
     email: email,
     senha: senha,
-    tipo:  perfilAtual
+    tipo:  'estudante'
   };
 
-  // Campos extras conforme o tipo
-  if (perfilAtual === 'estudante') {
-    novoUsuario.area = document.getElementById('cad-area').value;
-    novoUsuario.cpf  = document.getElementById('cad-cpf').value;
-    novoUsuario.candidaturas = []; // Lista de vagas que se candidatou
-  } else {
-    novoUsuario.cnpj = document.getElementById('cad-cnpj').value;
-  }
+  novoUsuario.area = document.getElementById('cad-area').value;
+  novoUsuario.cpf  = document.getElementById('cad-cpf').value;
+  novoUsuario.candidaturas = []; // Lista de vagas que se candidatou
 
   // Endereço (comum para estudante e empresa)
   novoUsuario.endereco = {
@@ -197,11 +155,7 @@ function fazerCadastro() {
   mostrarAlerta('Conta criada com sucesso! Redirecionando...', 'sucesso', 'alerta-login');
 
   setTimeout(function () {
-    if (perfilAtual === 'empresa') {
-      window.location.href = 'dashboard-empresa.html';
-    } else {
-      window.location.href = 'dashboard-estudante.html';
-    }
+    window.location.href = 'dashboard-estudante.html';
   }, 1000);
 }
 
@@ -233,11 +187,7 @@ function salvarUsuarios(usuarios) {
 document.addEventListener('DOMContentLoaded', function () {
   const usuario = obterUsuarioLogado();
   if (usuario) {
-    if (usuario.tipo === 'empresa') {
-      window.location.href = 'dashboard-empresa.html';
-    } else {
-      window.location.href = 'dashboard-estudante.html';
-    }
+    window.location.href = 'dashboard-estudante.html';
   }
 });
 
