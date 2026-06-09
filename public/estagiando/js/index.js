@@ -70,16 +70,10 @@ function criarCardVaga(vaga, indice) {
 
     <div class="vaga-info">
       <span class="vaga-info-item">📍 ${vaga.cidade}, ${vaga.estado}</span>
-      <span class="vaga-info-item">⏱ ${vaga.cargaHoraria}</span>
     </div>
 
     <div class="vaga-rodape">
-      <div>
-        <div class="vaga-bolsa">
-          ${formatarMoeda(vaga.bolsa)}
-          <span>/ mês</span>
-        </div>
-      </div>
+      <div></div>
       <button class="btn btn-primario btn-sm" onclick="abrirModal(${vaga.id})">
         Ver vaga →
       </button>
