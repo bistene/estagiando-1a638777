@@ -41,98 +41,114 @@ function mostrarAlerta(mensagem, tipo, elementoId) {
   }, 4000);
 }
 
-const vagasIniciais = [
-  {
-    id: 1,
-    titulo: 'Estágio em Desenvolvimento Web',
-    empresa: 'TechBrasil Ltda.',
-    area: 'tecnologia',
-    estado: 'SP',
-    cidade: 'São Paulo',
-    bolsa: 800,
-    cargaHoraria: '20h/semana',
-    descricao: 'Estágio em desenvolvimento front-end com HTML, CSS e JavaScript. Ambiente jovem e descontraído!',
-    linkExterno: 'https://www.techbrasil.com.br/carreiras'
-  },
-  {
-    id: 2,
-    titulo: 'Estágio em Enfermagem',
-    empresa: 'Hospital São Lucas',
-    area: 'saude',
-    estado: 'RJ',
-    cidade: 'Rio de Janeiro',
-    bolsa: 700,
-    cargaHoraria: '30h/semana',
-    descricao: 'Acompanhamento de procedimentos, apoio à equipe médica e atendimento ao paciente.',
-    linkExterno: 'https://www.hospitalsaolucas.com.br/trabalhe-conosco'
-  },
-  {
-    id: 3,
-    titulo: 'Estágio em Design Gráfico',
-    empresa: 'Agência Criativa',
-    area: 'design',
-    estado: 'MG',
-    cidade: 'Belo Horizonte',
-    bolsa: 750,
-    cargaHoraria: '20h/semana',
-    descricao: 'Criação de peças visuais para redes sociais, identidade visual e materiais gráficos.',
-    linkExterno: 'https://www.agenciacriativa.com.br/vagas'
-  },
-  {
-    id: 4,
-    titulo: 'Estágio em Administração',
-    empresa: 'Contabilidade Express',
-    area: 'negocios',
-    estado: 'PR',
-    cidade: 'Curitiba',
-    bolsa: 650,
-    cargaHoraria: '20h/semana',
-    descricao: 'Suporte administrativo, controle de planilhas, atendimento e organização de documentos.',
-    linkExterno: 'https://www.contabilidadeexpress.com.br/carreiras'
-  },
-  {
-    id: 5,
-    titulo: 'Estágio em Suporte de TI',
-    empresa: 'InfoSoluções',
-    area: 'tecnologia',
-    estado: 'RS',
-    cidade: 'Porto Alegre',
-    bolsa: 900,
-    cargaHoraria: '30h/semana',
-    descricao: 'Suporte técnico a usuários, instalação de softwares, manutenção de computadores.',
-    linkExterno: 'https://www.infosolucoes.com.br/trabalhe-conosco'
-  },
-  {
-    id: 6,
-    titulo: 'Estágio em Marketing Digital',
-    empresa: 'StartUp Conecta',
-    area: 'negocios',
-    estado: 'SP',
-    cidade: 'Campinas',
-    bolsa: 850,
-    cargaHoraria: '20h/semana',
-    descricao: 'Gestão de redes sociais, criação de conteúdo, análise de métricas e campanhas online.',
-    linkExterno: 'https://www.startupconecta.com.br/vagas'
+const ADZUNA_CONFIG = {
+  appId: '4a9de73d',
+  appKey: 'd218145bf5cbd2fd97bd2ee837f9ce65',
+  pais: 'br',
+  resultsPerPage: 50,
+  paginas: 2,
+  termoBusca: 'estágio'
+};
+
+const MAPA_ESTADOS_BR = {
+  'acre':'AC','alagoas':'AL','amapá':'AP','amapa':'AP','amazonas':'AM',
+  'bahia':'BA','ceará':'CE','ceara':'CE','distrito federal':'DF',
+  'espírito santo':'ES','espirito santo':'ES','goiás':'GO','goias':'GO',
+  'maranhão':'MA','maranhao':'MA','mato grosso':'MT','mato grosso do sul':'MS',
+  'minas gerais':'MG','pará':'PA','para':'PA','paraíba':'PB','paraiba':'PB',
+  'paraná':'PR','parana':'PR','pernambuco':'PE','piauí':'PI','piaui':'PI',
+  'rio de janeiro':'RJ','rio grande do norte':'RN','rio grande do sul':'RS',
+  'rondônia':'RO','rondonia':'RO','roraima':'RR','santa catarina':'SC',
+  'são paulo':'SP','sao paulo':'SP','sergipe':'SE','tocantins':'TO'
+};
+
+function _mapearEstado(nome) {
+  if (!nome) return '';
+  const chave = String(nome).toLowerCase().trim();
+  if (MAPA_ESTADOS_BR[chave]) return MAPA_ESTADOS_BR[chave];
+  if (chave.length === 2) return chave.toUpperCase();
+  return '';
+}
+
+function _mapearArea(tag, label) {
+  const t = (tag || '').toLowerCase();
+  const l = (label || '').toLowerCase();
+  if (t.includes('it-') || l.includes('ti') || l.includes('tecnolog') || l.includes('software')) return 'tecnologia';
+  if (t.includes('healthcare') || l.includes('saúde') || l.includes('saude') || l.includes('enferm') || l.includes('médic')) return 'saude';
+  if (t.includes('design') || t.includes('creative') || l.includes('design') || l.includes('criativ')) return 'design';
+  if (t.includes('admin') || t.includes('sales') || t.includes('finance') || t.includes('hr-') || t.includes('marketing') || t.includes('consult') ||
+      l.includes('admin') || l.includes('vendas') || l.includes('marketing') || l.includes('financ') || l.includes('rh') || l.includes('negóc')) return 'negocios';
+  return 'outros';
+}
+
+function _extrairLocal(location) {
+  const area = (location && Array.isArray(location.area)) ? location.area : [];
+  // Adzuna BR: ["Brasil", "Estado", "Cidade", ...]
+  let estado = '';
+  let cidade = '';
+  for (let i = 0; i < area.length; i++) {
+    const uf = _mapearEstado(area[i]);
+    if (uf && !estado) { estado = uf; continue; }
+    if (estado && !cidade) { cidade = area[i]; }
   }
-];
+  if (!cidade && location && location.display_name) {
+    cidade = String(location.display_name).split(',')[0].trim();
+  }
+  return { estado: estado || '—', cidade: cidade || 'Brasil' };
+}
+
+function _mapearVagaAdzuna(item) {
+  const local = _extrairLocal(item.location);
+  const bolsa = item.salary_min ? Math.round(item.salary_min / 12) : 0;
+  let descricao = item.description || '';
+  if (descricao.length > 400) descricao = descricao.substring(0, 397) + '...';
+  return {
+    id: item.id,
+    titulo: item.title ? item.title.replace(/<[^>]+>/g, '') : 'Vaga',
+    empresa: (item.company && item.company.display_name) || 'Empresa confidencial',
+    area: _mapearArea(item.category && item.category.tag, item.category && item.category.label),
+    estado: local.estado,
+    cidade: local.cidade,
+    bolsa: bolsa,
+    cargaHoraria: item.contract_time === 'part_time' ? '20h/semana' : '40h/semana',
+    descricao: descricao || 'Acesse o site da empresa para mais detalhes sobre esta vaga.',
+    linkExterno: item.redirect_url || '#'
+  };
+}
+
+let _vagasCache = [];
+let _vagasPromise = null;
 
 function obterVagas() {
-  const salvas = localStorage.getItem('estagiando-vagas-v2');
-  return salvas ? JSON.parse(salvas) : vagasIniciais;
+  return _vagasCache;
 }
 
-function salvarVagas(vagas) {
-  localStorage.setItem('estagiando-vagas-v2', JSON.stringify(vagas));
+function carregarVagas() {
+  if (_vagasPromise) return _vagasPromise;
+  _vagasPromise = (async function () {
+    const todas = [];
+    for (let p = 1; p <= ADZUNA_CONFIG.paginas; p++) {
+      const url = `https://api.adzuna.com/v1/api/jobs/${ADZUNA_CONFIG.pais}/search/${p}` +
+        `?app_id=${ADZUNA_CONFIG.appId}&app_key=${ADZUNA_CONFIG.appKey}` +
+        `&results_per_page=${ADZUNA_CONFIG.resultsPerPage}` +
+        `&what=${encodeURIComponent(ADZUNA_CONFIG.termoBusca)}` +
+        `&content-type=application/json`;
+      try {
+        const resp = await fetch(url);
+        if (!resp.ok) break;
+        const dados = await resp.json();
+        if (!dados.results || dados.results.length === 0) break;
+        dados.results.forEach(function (item) { todas.push(_mapearVagaAdzuna(item)); });
+      } catch (e) {
+        console.error('Erro ao buscar vagas Adzuna:', e);
+        break;
+      }
+    }
+    _vagasCache = todas;
+    return todas;
+  })();
+  return _vagasPromise;
 }
-
-function inicializarVagas() {
-  if (!localStorage.getItem('estagiando-vagas-v2')) {
-    localStorage.removeItem('estagiando-vagas');
-    salvarVagas(vagasIniciais);
-  }
-}
-
-inicializarVagas();
 
 function formatarMoeda(valor) {
   return valor.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' });

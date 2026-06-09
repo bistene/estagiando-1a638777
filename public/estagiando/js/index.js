@@ -1,7 +1,10 @@
-document.addEventListener('DOMContentLoaded', function () {
-  
+document.addEventListener('DOMContentLoaded', async function () {
   verificarSessaoNavbar();
 
+  const contador = document.getElementById('contador-vagas');
+  if (contador) contador.textContent = 'Buscando vagas...';
+
+  await carregarVagas();
   renderizarVagas(obterVagas());
 });
 
