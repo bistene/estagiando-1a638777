@@ -3,8 +3,6 @@ document.addEventListener('DOMContentLoaded', function () {
   verificarSessaoNavbar();
 
   renderizarVagas(obterVagas());
-
-  document.getElementById('total-vagas').textContent = obterVagas().length;
 });
 
 function verificarSessaoNavbar() {
