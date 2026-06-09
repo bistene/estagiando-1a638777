@@ -1,11 +1,11 @@
-document.addEventListener('DOMContentLoaded', function () {
-  
+document.addEventListener('DOMContentLoaded', async function () {
   const usuario = obterUsuarioLogado();
   if (!usuario || usuario.tipo !== 'estudante') {
     window.location.href = 'login.html';
     return;
   }
 
+  await carregarVagas();
   renderizarPerfil(usuario);
   renderizarRecomendadas(usuario);
 });
