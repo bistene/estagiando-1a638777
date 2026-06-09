@@ -73,12 +73,21 @@ function _mapearEstado(nome) {
 function _mapearArea(tag, label) {
   const t = (tag || '').toLowerCase();
   const l = (label || '').toLowerCase();
-  if (t.includes('it-') || l.includes('ti') || l.includes('tecnolog') || l.includes('software')) return 'tecnologia';
-  if (t.includes('healthcare') || l.includes('saúde') || l.includes('saude') || l.includes('enferm') || l.includes('médic')) return 'saude';
-  if (t.includes('design') || t.includes('creative') || l.includes('design') || l.includes('criativ')) return 'design';
-  if (t.includes('admin') || t.includes('sales') || t.includes('finance') || t.includes('hr-') || t.includes('marketing') || t.includes('consult') ||
-      l.includes('admin') || l.includes('vendas') || l.includes('marketing') || l.includes('financ') || l.includes('rh') || l.includes('negóc')) return 'negocios';
-  return 'outros';
+  const s = t + ' ' + l;
+  if (/it-|software|tecnolog|developer|programa|ti\b|dados|data|ti jobs/.test(s)) return 'tecnologia';
+  if (/healthcare|saúde|saude|enferm|médic|medic|hospital|farmac/.test(s)) return 'saude';
+  if (/design|creative|criativ|ux|ui/.test(s)) return 'design';
+  if (/finance|financ|contab|account|banc/.test(s)) return 'financas';
+  if (/marketing|comunica|publicidade|social media/.test(s)) return 'marketing';
+  if (/sales|vendas|comercial|atendimento/.test(s)) return 'vendas';
+  if (/admin|administra|escritório|escritorio|recep/.test(s)) return 'administrativo';
+  if (/hr-|\brh\b|recursos humanos|pessoas/.test(s)) return 'rh';
+  if (/engineer|engenh|industr|produç|manufatur|mecânic|elétric|eletric|civil/.test(s)) return 'engenharia';
+  if (/legal|jurídic|juridic|direito|advog/.test(s)) return 'juridico';
+  if (/log[ií]stic|supply|transport|estoque/.test(s)) return 'logistica';
+  if (/educa|ensino|professor|pedagog/.test(s)) return 'educacao';
+  if (/consult/.test(s)) return 'consultoria';
+  return 'geral';
 }
 
 function _extrairLocal(location) {
@@ -159,10 +168,19 @@ function labelArea(area) {
     tecnologia: 'Tecnologia',
     saude: 'Saúde',
     design: 'Design',
-    negocios: 'Negócios',
-    outros: 'Outros'
+    financas: 'Finanças',
+    marketing: 'Marketing',
+    vendas: 'Vendas',
+    administrativo: 'Administrativo',
+    rh: 'Recursos Humanos',
+    engenharia: 'Engenharia',
+    juridico: 'Jurídico',
+    logistica: 'Logística',
+    educacao: 'Educação',
+    consultoria: 'Consultoria',
+    geral: 'Geral'
   };
-  return mapa[area] || 'Outros';
+  return mapa[area] || 'Geral';
 }
 
 function classTag(area) {
@@ -170,8 +188,17 @@ function classTag(area) {
     tecnologia: 'tag-tech',
     saude: 'tag-saude',
     design: 'tag-design',
-    negocios: 'tag-negocio',
-    outros: 'tag-outro'
+    financas: 'tag-negocio',
+    marketing: 'tag-negocio',
+    vendas: 'tag-negocio',
+    administrativo: 'tag-outro',
+    rh: 'tag-outro',
+    engenharia: 'tag-tech',
+    juridico: 'tag-outro',
+    logistica: 'tag-outro',
+    educacao: 'tag-outro',
+    consultoria: 'tag-negocio',
+    geral: 'tag-outro'
   };
   return mapa[area] || 'tag-outro';
 }
