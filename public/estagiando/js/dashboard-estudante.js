@@ -25,7 +25,14 @@ function renderizarPerfil(usuario) {
     tagArea.style.display = 'none';
   }
 
-  document.getElementById('stat-vagas-disponiveis').textContent = obterVagas().length;
+  const vagas = obterVagas();
+  const set = (id, v) => { const e = document.getElementById(id); if (e) e.textContent = v; };
+  set('stat-vagas-disponiveis', vagas.length);
+  set('stat-rj',       vagas.filter(v => v.estado === 'RJ').length);
+  set('stat-estagios', vagas.filter(v => /est[áa]gi|intern|trainee/i.test(v.titulo + ' ' + (v.descricao||''))).length);
+
+  const loading = document.getElementById('dash-loading');
+  if (loading) loading.style.display = 'none';
 }
 
 function renderizarRecomendadas(usuario) {

@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+Disallow: /pages/dashboard-estudante.html
+
+Sitemap: https://estagiando.com.br/sitemap.xml

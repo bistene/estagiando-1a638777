@@ -1,198 +1,460 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Estagiando — Encontre seu Estágio</title>
 
+  <!-- ── SEO ─────────────────────────────────────────────────── -->
+  <title>Estagiando — Vagas de Estágio e TI no Rio de Janeiro e Brasil</title>
+  <meta name="description" content="Encontre vagas de estágio e emprego em TI no Rio de Janeiro e em todo o Brasil. Front-end, Back-end, Full Stack, Python, React, DevOps e muito mais. Grátis para estudantes." />
+  <meta name="keywords" content="estágio, vaga de estágio, emprego TI, desenvolvedor Rio de Janeiro, estágio programação, estágio tecnologia, estagiando" />
+  <meta name="robots" content="index, follow" />
+  <link rel="canonical" href="https://estagiando.com.br/" />
+
+  <!-- ── OPEN GRAPH ────────────────────────────────────────────── -->
+  <meta property="og:type"        content="website" />
+  <meta property="og:url"         content="https://estagiando.com.br/" />
+  <meta property="og:title"       content="Estagiando — Vagas de Estágio e TI" />
+  <meta property="og:description" content="Conectamos estudantes às melhores oportunidades de estágio em TI e em todo o Brasil. Simples, rápido e gratuito." />
+  <meta property="og:image"       content="https://estagiando.com.br/og-image.png" />
+  <meta property="og:locale"      content="pt_BR" />
+  <meta name="twitter:card"       content="summary_large_image" />
+  <meta name="twitter:title"      content="Estagiando — Vagas de Estágio e TI" />
+  <meta name="twitter:description" content="Vagas de estágio em TI, Rio de Janeiro e todo o Brasil." />
+
+  <!-- ── STRUCTURED DATA ──────────────────────────────────────── -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "name": "Estagiando",
+    "url": "https://estagiando.com.br/",
+    "description": "Plataforma de vagas de estágio e emprego em TI para estudantes brasileiros",
+    "potentialAction": {
+      "@type": "SearchAction",
+      "target": "https://estagiando.com.br/?q={search_term_string}",
+      "query-input": "required name=search_term_string"
+    }
+  }
+  </script>
+
+  <!-- ── FAVICON ──────────────────────────────────────────────── -->
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
 
+  <!-- ── CSS ──────────────────────────────────────────────────── -->
   <link rel="stylesheet" href="css/style.css" />
-  
   <link rel="stylesheet" href="css/index.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link rel="preload"    href="js/main.js"  as="script" />
+  <link rel="preload"    href="js/index.js" as="script" />
 </head>
 <body>
 
-  <nav class="navbar">
-  <a href="index.html" class="navbar-logo">
+<!-- ══════════════════════════════════════════════════════════════
+     NAVBAR
+════════════════════════════════════════════════════════════════ -->
+<nav class="navbar" role="navigation" aria-label="Navegação principal">
+  <a href="index.html" class="navbar-logo" aria-label="Estagiando — página inicial">
     Estagi<span>ando</span> 🎓
   </a>
 
   <div class="navbar-direita">
-    <ul class="navbar-links">
-      <li><a href="index.html">Vagas</a></li>
-
+    <ul class="navbar-links" role="list">
+      <li><a href="index.html" aria-current="page">Vagas</a></li>
       <li id="link-dashboard" style="display:none">
         <a href="#" id="link-area-usuario">Minha Área</a>
       </li>
-
       <li id="link-login">
         <a href="pages/login.html" class="btn btn-primario btn-sm">Entrar</a>
       </li>
-
       <li id="link-sair" style="display:none">
         <a href="#" onclick="encerrarSessao()" class="btn btn-secundario btn-sm">Sair</a>
       </li>
     </ul>
 
+    <!-- Acessibilidade -->
     <div class="acess-widget" id="acess-widget">
-      <button class="acess-btn-principal" id="acess-toggle" onclick="toggleAcessWidget()" aria-label="Opções de acessibilidade" title="Acessibilidade">♿</button>
-      <div class="acess-painel" id="acess-painel" aria-hidden="true">
+      <button class="acess-btn-principal" id="acess-toggle"
+              onclick="toggleAcessWidget()"
+              aria-label="Opções de acessibilidade"
+              aria-expanded="false"
+              aria-controls="acess-painel">♿</button>
+      <div class="acess-painel" id="acess-painel" aria-hidden="true" role="dialog" aria-label="Acessibilidade">
         <div class="acess-painel-titulo">Acessibilidade</div>
         <div class="acess-opcao">
           <span class="acess-opcao-label">Tamanho da fonte</span>
-          <div class="acess-font-controles">
-            <button class="acess-font-btn" onclick="alterarFonte(-1)" aria-label="Diminuir fonte" title="Diminuir fonte">A−</button>
-            <span class="acess-font-valor" id="acess-font-valor">100%</span>
-            <button class="acess-font-btn" onclick="alterarFonte(1)" aria-label="Aumentar fonte" title="Aumentar fonte">A+</button>
+          <div class="acess-font-controles" role="group" aria-label="Controle de fonte">
+            <button class="acess-font-btn" onclick="alterarFonte(-1)" aria-label="Diminuir fonte">A−</button>
+            <span class="acess-font-valor" id="acess-font-valor" aria-live="polite">100%</span>
+            <button class="acess-font-btn" onclick="alterarFonte(1)"  aria-label="Aumentar fonte">A+</button>
           </div>
         </div>
         <button class="acess-reset" onclick="resetarAcessibilidade()">↺ Resetar</button>
       </div>
     </div>
 
-    <button 
-      class="btn-tema" 
-      onclick="alternarTema()" 
-      title="Alternar modo escuro" 
-      aria-label="Alternar tema">
+    <!-- Tema -->
+    <button class="btn-tema" onclick="alternarTema()"
+            title="Alternar modo escuro"
+            aria-label="Alternar tema claro/escuro"></button>
+
+    <!-- Menu mobile -->
+    <button class="navbar-menu-btn" id="navbar-menu-btn"
+            onclick="toggleMenuMobile()"
+            aria-label="Abrir menu de navegação"
+            aria-expanded="false"
+            aria-controls="navbar-drawer">
+      <span></span><span></span><span></span>
     </button>
   </div>
 </nav>
-  
-  <section class="hero">
-    <div class="container">
-      <div class="hero-conteudo animar-entrada">
-        <span class="hero-badge">✨ Plataforma de Estágios</span>
-        <h1 class="hero-titulo">
-          Seu próximo estágio<br/>
-          <span class="hero-destaque">começa aqui</span>
-        </h1>
-        <p class="hero-subtitulo">
-          Conectamos estudantes às melhores oportunidades de estágio<br/>
-          em todo o Brasil. Simples, rápido e gratuito para estudantes!
-        </p>
 
-      </div>
-    </div>
+<!-- Drawer mobile -->
+<nav class="navbar-drawer" id="navbar-drawer" aria-label="Menu mobile">
+  <a href="index.html">🏠 Vagas</a>
+  <div id="m-link-dashboard" style="display:none">
+    <a href="pages/dashboard-estudante.html" id="m-link-area-usuario">🎓 Minha Área</a>
+  </div>
+  <div id="m-link-login">
+    <a href="pages/login.html" class="btn btn-primario btn-sm" style="width:100%">Entrar / Cadastrar</a>
+  </div>
+  <div id="m-link-sair" style="display:none">
+    <a href="#" onclick="encerrarSessao()" class="btn btn-secundario btn-sm" style="width:100%">Sair</a>
+  </div>
+</nav>
 
-    <div class="hero-blob hero-blob-1"></div>
-    <div class="hero-blob hero-blob-2"></div>
-  </section>
+<!-- ══════════════════════════════════════════════════════════════
+     HERO
+════════════════════════════════════════════════════════════════ -->
+<section class="hero" aria-label="Apresentação">
+  <div class="container">
+    <div class="hero-conteudo animar-entrada">
+      <span class="hero-badge">✨ Plataforma de Estágios &amp; TI</span>
+      <h1 class="hero-titulo">
+        Seu próximo estágio<br/>
+        <span class="hero-destaque">começa aqui</span>
+      </h1>
+      <p class="hero-subtitulo">
+        Vagas de estágio e emprego em TI no Rio de Janeiro e em todo o Brasil.<br/>
+        Front-end, Back-end, Full Stack, Python, React e muito mais.
+      </p>
 
-  <section class="secao-filtros">
-    <div class="container">
-      <div class="filtros-card card animar-entrada">
-        <h2 class="filtros-titulo">🔍 Encontre sua vaga ideal</h2>
-
-        <div class="filtros-grid">
-
-          <div class="form-grupo">
-            <label class="form-label" for="filtro-estado">📍 Estado</label>
-            <select class="form-select" id="filtro-estado" onchange="aplicarFiltros()">
-              <option value="">Todos os estados</option>
-              <option value="AC">AC — Acre</option>
-              <option value="AL">AL — Alagoas</option>
-              <option value="AP">AP — Amapá</option>
-              <option value="AM">AM — Amazonas</option>
-              <option value="BA">BA — Bahia</option>
-              <option value="CE">CE — Ceará</option>
-              <option value="DF">DF — Distrito Federal</option>
-              <option value="ES">ES — Espírito Santo</option>
-              <option value="GO">GO — Goiás</option>
-              <option value="MA">MA — Maranhão</option>
-              <option value="MT">MT — Mato Grosso</option>
-              <option value="MS">MS — Mato Grosso do Sul</option>
-              <option value="MG">MG — Minas Gerais</option>
-              <option value="PA">PA — Pará</option>
-              <option value="PB">PB — Paraíba</option>
-              <option value="PR">PR — Paraná</option>
-              <option value="PE">PE — Pernambuco</option>
-              <option value="PI">PI — Piauí</option>
-              <option value="RJ">RJ — Rio de Janeiro</option>
-              <option value="RN">RN — Rio Grande do Norte</option>
-              <option value="RS">RS — Rio Grande do Sul</option>
-              <option value="RO">RO — Rondônia</option>
-              <option value="RR">RR — Roraima</option>
-              <option value="SC">SC — Santa Catarina</option>
-              <option value="SP">SP — São Paulo</option>
-              <option value="SE">SE — Sergipe</option>
-              <option value="TO">TO — Tocantins</option>
-            </select>
-          </div>
-
-          <div class="form-grupo">
-            <label class="form-label" for="filtro-area">🎯 Área de Atuação</label>
-            <select class="form-select" id="filtro-area" onchange="aplicarFiltros()">
-              <option value="">Todas as áreas</option>
-              <option value="tecnologia">💻 Tecnologia</option>
-              <option value="saude">🏥 Saúde</option>
-              <option value="design">🎨 Design</option>
-              <option value="financas">💰 Finanças</option>
-              <option value="marketing">📣 Marketing</option>
-              <option value="vendas">🛒 Vendas</option>
-              <option value="administrativo">🗂 Administrativo</option>
-              <option value="rh">👥 Recursos Humanos</option>
-              <option value="engenharia">⚙️ Engenharia</option>
-              <option value="juridico">⚖️ Jurídico</option>
-              <option value="logistica">🚚 Logística</option>
-              <option value="educacao">📚 Educação</option>
-              <option value="consultoria">🧭 Consultoria</option>
-              <option value="geral">🌐 Geral</option>
-            </select>
-          </div>
-
-          <div class="form-grupo filtros-acao">
-            <label class="form-label" style="opacity:0">ação</label>
-            <button class="btn btn-secundario" onclick="limparFiltros()">
-              ✖ Limpar filtros
-            </button>
-          </div>
-
+      <div class="hero-stats" role="region" aria-label="Estatísticas de vagas">
+        <div class="stat-item">
+          <span class="stat-numero" id="stat-total">—</span>
+          <span class="stat-label">Vagas</span>
+        </div>
+        <div class="stat-divisor" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-numero" id="stat-estagios">—</span>
+          <span class="stat-label">Estágios</span>
+        </div>
+        <div class="stat-divisor" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-numero" id="stat-rj">—</span>
+          <span class="stat-label">Rio de Janeiro</span>
+        </div>
+        <div class="stat-divisor" aria-hidden="true"></div>
+        <div class="stat-item">
+          <span class="stat-numero" id="stat-ti">—</span>
+          <span class="stat-label">Vagas TI</span>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+  <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
+  <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
+</section>
 
-  <main class="secao-vagas">
-    <div class="container">
-
-      <div class="vagas-cabecalho">
-        <h2 class="vagas-titulo">Vagas disponíveis</h2>
-        <span class="vagas-contador" id="contador-vagas">Carregando...</span>
-      </div>
-
-      <div class="vagas-grid" id="lista-vagas">
-        
-      </div>
-
-      <div class="vagas-vazio" id="vagas-vazio" style="display:none">
-        <span class="vazio-emoji">😕</span>
-        <h3>Nenhuma vaga encontrada</h3>
-        <p>Tente outros filtros ou <a href="#" onclick="limparFiltros()">limpe os filtros</a>.</p>
-      </div>
-
+<!-- ══════════════════════════════════════════════════════════════
+     CIDADES RJ — DESTAQUE
+════════════════════════════════════════════════════════════════ -->
+<section class="secao-destaque" aria-label="Cidades do Rio de Janeiro">
+  <div class="container">
+    <div class="destaque-header">
+      <h2 class="destaque-titulo">📍 Rio de Janeiro</h2>
+      <button class="btn btn-secundario btn-sm" onclick="limparFiltroRJ()">Ver todas</button>
     </div>
-  </main>
-
-  <div class="modal-overlay" id="modal-overlay" onclick="fecharModal()">
-    <div class="modal" onclick="event.stopPropagation()">
-      <button class="modal-fechar" onclick="fecharModal()">✕</button>
-
-      <div id="modal-conteudo">
-        
-      </div>
+    <div class="cidades-chips" role="list" aria-label="Filtrar por cidade">
+      <button class="cidade-chip" role="listitem" data-cidade="Rio de Janeiro" onclick="filtrarCidadeRJ('Rio de Janeiro')">Rio de Janeiro</button>
+      <button class="cidade-chip" role="listitem" data-cidade="Niterói"        onclick="filtrarCidadeRJ('Niterói')">Niterói</button>
+      <button class="cidade-chip" role="listitem" data-cidade="São Gonçalo"    onclick="filtrarCidadeRJ('São Gonçalo')">São Gonçalo</button>
+      <button class="cidade-chip" role="listitem" data-cidade="Nova Iguaçu"    onclick="filtrarCidadeRJ('Nova Iguaçu')">Nova Iguaçu</button>
+      <button class="cidade-chip" role="listitem" data-cidade="Duque de Caxias" onclick="filtrarCidadeRJ('Duque de Caxias')">Duque de Caxias</button>
+      <button class="cidade-chip" role="listitem" data-cidade="Petrópolis"     onclick="filtrarCidadeRJ('Petrópolis')">Petrópolis</button>
+      <button class="cidade-chip" role="listitem" data-cidade="Volta Redonda"  onclick="filtrarCidadeRJ('Volta Redonda')">Volta Redonda</button>
+      <button class="cidade-chip" role="listitem" data-cidade="Macaé"          onclick="filtrarCidadeRJ('Macaé')">Macaé</button>
+      <button class="cidade-chip" role="listitem" data-cidade="Campos dos Goytacazes" onclick="filtrarCidadeRJ('Campos dos Goytacazes')">Campos</button>
+      <button class="cidade-chip" role="listitem" data-cidade="Cabo Frio"      onclick="filtrarCidadeRJ('Cabo Frio')">Cabo Frio</button>
     </div>
   </div>
+</section>
 
-  <footer>
-    <p>feito pelo soprad <strong>Estagiando</strong> &copy; 2025</p>
-    <p style="margin-top:0.4rem; font-size:0.8rem;">Projeto acadêmico · Apenas front-end</p>
-  </footer>
+<!-- ══════════════════════════════════════════════════════════════
+     ABAS
+════════════════════════════════════════════════════════════════ -->
+<nav class="secao-abas" aria-label="Categorias de vagas">
+  <ul class="abas-lista" role="tablist">
+    <li role="presentation">
+      <button class="aba-btn ativo" role="tab" data-aba="todas"
+              aria-selected="true" aria-controls="lista-vagas" id="tab-todas">
+        🌐 Todas <span class="aba-badge" id="contador-todas">…</span>
+      </button>
+    </li>
+    <li role="presentation">
+      <button class="aba-btn" role="tab" data-aba="estagios"
+              aria-selected="false" id="tab-estagios">
+        🎓 Estágios <span class="aba-badge" id="contador-estagios">…</span>
+      </button>
+    </li>
+    <li role="presentation">
+      <button class="aba-btn" role="tab" data-aba="ti"
+              aria-selected="false" id="tab-ti">
+        💻 TI <span class="aba-badge" id="contador-ti">…</span>
+      </button>
+    </li>
+    <li role="presentation">
+      <button class="aba-btn" role="tab" data-aba="rj"
+              aria-selected="false" id="tab-rj">
+        📍 Rio de Janeiro <span class="aba-badge" id="contador-rj">…</span>
+      </button>
+    </li>
+    <li role="presentation">
+      <button class="aba-btn" role="tab" data-aba="remoto"
+              aria-selected="false" id="tab-remoto">
+        🏠 Remoto <span class="aba-badge" id="contador-remoto">…</span>
+      </button>
+    </li>
+  </ul>
+</nav>
 
-  <script src="js/main.js"></script>
-  <script src="js/index.js"></script>
+<!-- ══════════════════════════════════════════════════════════════
+     FILTROS
+════════════════════════════════════════════════════════════════ -->
+<section class="secao-filtros" aria-label="Filtros de busca">
+  <div class="container">
+    <div class="filtros-card card">
+      <h2 class="filtros-titulo">🔍 Encontre sua vaga ideal</h2>
+
+      <div class="filtros-grid">
+
+        <!-- Busca textual -->
+        <div class="form-grupo filtros-busca">
+          <label class="form-label" for="filtro-busca">🔍 Busca</label>
+          <div style="position:relative">
+            <span class="busca-icone" aria-hidden="true">🔍</span>
+            <input class="form-input busca-input" id="filtro-busca"
+                   type="search"
+                   placeholder="Cargo, empresa, cidade…"
+                   autocomplete="off"
+                   aria-label="Buscar vagas por cargo, empresa ou cidade" />
+            <button class="busca-clear" id="busca-clear"
+                    onclick="limparBusca()"
+                    aria-label="Limpar busca">✕</button>
+          </div>
+        </div>
+
+        <!-- Estado -->
+        <div class="form-grupo">
+          <label class="form-label" for="filtro-estado">📍 Estado</label>
+          <select class="form-select" id="filtro-estado" aria-label="Filtrar por estado">
+            <option value="">Todos os estados</option>
+            <option value="RJ">RJ — Rio de Janeiro ⭐</option>
+            <option value="SP">SP — São Paulo</option>
+            <option value="MG">MG — Minas Gerais</option>
+            <option value="ES">ES — Espírito Santo</option>
+            <option value="AC">AC — Acre</option>
+            <option value="AL">AL — Alagoas</option>
+            <option value="AP">AP — Amapá</option>
+            <option value="AM">AM — Amazonas</option>
+            <option value="BA">BA — Bahia</option>
+            <option value="CE">CE — Ceará</option>
+            <option value="DF">DF — Distrito Federal</option>
+            <option value="GO">GO — Goiás</option>
+            <option value="MA">MA — Maranhão</option>
+            <option value="MT">MT — Mato Grosso</option>
+            <option value="MS">MS — Mato Grosso do Sul</option>
+            <option value="PA">PA — Pará</option>
+            <option value="PB">PB — Paraíba</option>
+            <option value="PR">PR — Paraná</option>
+            <option value="PE">PE — Pernambuco</option>
+            <option value="PI">PI — Piauí</option>
+            <option value="RN">RN — Rio Grande do Norte</option>
+            <option value="RS">RS — Rio Grande do Sul</option>
+            <option value="RO">RO — Rondônia</option>
+            <option value="RR">RR — Roraima</option>
+            <option value="SC">SC — Santa Catarina</option>
+            <option value="SE">SE — Sergipe</option>
+            <option value="TO">TO — Tocantins</option>
+          </select>
+        </div>
+
+        <!-- Cidade -->
+        <div class="form-grupo">
+          <label class="form-label" for="filtro-cidade">🏙️ Cidade</label>
+          <input class="form-input" id="filtro-cidade"
+                 type="text"
+                 placeholder="Ex: Niterói, Nova Iguaçu…"
+                 aria-label="Filtrar por cidade" />
+        </div>
+
+        <!-- Área -->
+        <div class="form-grupo">
+          <label class="form-label" for="filtro-area">🎯 Área</label>
+          <select class="form-select" id="filtro-area" aria-label="Filtrar por área de atuação">
+            <option value="">Todas as áreas</option>
+            <option value="tecnologia">💻 Tecnologia</option>
+            <option value="saude">🏥 Saúde</option>
+            <option value="design">🎨 Design</option>
+            <option value="financas">💰 Finanças</option>
+            <option value="marketing">📣 Marketing</option>
+            <option value="vendas">🛒 Vendas</option>
+            <option value="administrativo">🗂 Administrativo</option>
+            <option value="rh">👥 Recursos Humanos</option>
+            <option value="engenharia">⚙️ Engenharia</option>
+            <option value="juridico">⚖️ Jurídico</option>
+            <option value="logistica">🚚 Logística</option>
+            <option value="educacao">📚 Educação</option>
+            <option value="consultoria">🧭 Consultoria</option>
+            <option value="geral">🌐 Geral</option>
+          </select>
+        </div>
+
+        <!-- Tipo -->
+        <div class="form-grupo">
+          <label class="form-label" for="filtro-tipo">📋 Tipo</label>
+          <select class="form-select" id="filtro-tipo" aria-label="Filtrar por tipo de vaga">
+            <option value="">Todos os tipos</option>
+            <option value="estagio">🎓 Estágio</option>
+            <option value="efetivo">💼 CLT/Efetivo</option>
+            <option value="remoto">🏠 Remoto</option>
+          </select>
+        </div>
+
+        <!-- Salário -->
+        <div class="form-grupo">
+          <label class="form-label" for="filtro-salario">
+            💰 Salário mínimo: <span id="filtro-salario-val">Qualquer</span>
+          </label>
+          <input type="range" id="filtro-salario" min="0" max="5000" step="200" value="0"
+                 style="width:100%;accent-color:var(--cor-acento)"
+                 aria-label="Filtrar por salário mínimo" />
+        </div>
+
+        <!-- Ações -->
+        <div class="form-grupo filtros-acao">
+          <label class="form-label" style="opacity:0" aria-hidden="true">ação</label>
+          <label style="display:flex;align-items:center;gap:.5rem;font-size:.9rem;font-weight:700;cursor:pointer;min-height:44px">
+            <input type="checkbox" id="filtro-remoto" style="width:18px;height:18px;accent-color:var(--cor-acento)" />
+            🏠 Apenas remoto
+          </label>
+          <button class="btn btn-secundario btn-sm" onclick="limparFiltros()" aria-label="Limpar todos os filtros">
+            ✕ Limpar
+          </button>
+        </div>
+
+      </div>
+
+      <!-- Chips dos filtros ativos -->
+      <div class="filtros-ativos" id="filtros-ativos" aria-label="Filtros ativos" role="list"></div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════════════════════════════════════════════════════════
+     VAGAS
+════════════════════════════════════════════════════════════════ -->
+<main class="secao-vagas" id="secao-vagas" role="main">
+  <div class="container">
+
+    <!-- Erro API -->
+    <div class="api-erro-banner" id="api-erro-banner" role="alert">
+      <span>⚠️</span>
+      <span class="erro-msg">Erro ao carregar vagas.</span>
+      <button class="btn btn-sm btn-secundario"
+              onclick="location.reload()" style="margin-left:auto">
+        Tentar novamente
+      </button>
+    </div>
+
+    <!-- Status bar -->
+    <div class="vagas-status-bar" id="status-bar" role="status" aria-live="polite">
+      <div class="status-spinner" aria-hidden="true"></div>
+      <span class="status-msg">Buscando vagas…</span>
+    </div>
+
+    <!-- Cabeçalho + sort -->
+    <div class="vagas-cabecalho">
+      <div>
+        <h2 class="vagas-titulo">Vagas disponíveis</h2>
+      </div>
+      <div style="display:flex;align-items:center;gap:.75rem;flex-wrap:wrap">
+        <span class="vagas-contador" id="contador-vagas" aria-live="polite">—</span>
+        <div class="vagas-sort" role="group" aria-label="Ordenar resultados">
+          <button class="sort-btn ativo" data-sort="recentes" aria-pressed="true">Recentes</button>
+          <button class="sort-btn" data-sort="relevancia"  aria-pressed="false">Relevância</button>
+          <button class="sort-btn" data-sort="salario"     aria-pressed="false">Salário</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Grid de vagas -->
+    <div class="vagas-grid" id="lista-vagas" role="list" aria-label="Lista de vagas"></div>
+
+    <!-- Estado vazio -->
+    <div class="vagas-vazio" id="vagas-vazio" style="display:none" role="status">
+      <span class="vazio-emoji" aria-hidden="true">😕</span>
+      <h3>Nenhuma vaga encontrada</h3>
+      <p>Tente outros filtros ou <a href="#" onclick="limparFiltros()">limpe os filtros</a>.</p>
+    </div>
+
+    <!-- Carregar mais -->
+    <div class="carregar-mais-wrap">
+      <button class="btn btn-secundario" id="btn-carregar-mais"
+              onclick="carregarMais()"
+              style="display:none"
+              aria-label="Carregar mais vagas">
+        ↓ Carregar mais vagas
+      </button>
+    </div>
+
+  </div>
+</main>
+
+<!-- ══════════════════════════════════════════════════════════════
+     MODAL (detalhe de vaga)
+════════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay" id="modal-overlay"
+     onclick="fecharModal()"
+     role="dialog"
+     aria-modal="true"
+     aria-label="Detalhes da vaga">
+  <div class="modal" onclick="event.stopPropagation()">
+    <button class="modal-fechar" onclick="fecharModal()"
+            aria-label="Fechar modal">✕</button>
+    <div id="modal-conteudo"></div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════
+     FOOTER
+════════════════════════════════════════════════════════════════ -->
+<footer role="contentinfo">
+  <p>Feito com ❤️ pelo soprad · <strong>Estagiando</strong> &copy; 2025</p>
+  <p style="margin-top:.3rem;font-size:.78rem;color:var(--texto-placeholder)">
+    Vagas em tempo real via API Adzuna · Dados atualizados automaticamente
+  </p>
+  <nav class="footer-links" aria-label="Links do rodapé">
+    <a href="sitemap.xml">Sitemap</a>
+    <a href="robots.txt">Robots</a>
+    <a href="pages/login.html">Entrar</a>
+  </nav>
+</footer>
+
+<!-- ── SCRIPTS ───────────────────────────────────────────────── -->
+<script src="js/main.js"></script>
+<script src="js/index.js"></script>
+
 </body>
 </html>

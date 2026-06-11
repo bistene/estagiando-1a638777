@@ -1,81 +1,89 @@
 <!DOCTYPE html>
-
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Estagiando — Meu Perfil</title>
+  <meta name="robots" content="noindex" />
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎓</text></svg>" />
   <link rel="stylesheet" href="../css/style.css" />
   <link rel="stylesheet" href="../css/dashboard.css" />
 </head>
 <body>
 
-  <nav class="navbar">
-    <a href="../index.html" class="navbar-logo">Estagi<span>ando</span> 🎓</a>
-    <div class="navbar-direita">
-      <ul class="navbar-links">
-        <li><a href="../index.html">← Ver vagas</a></li>
-        <li><a href="#" onclick="encerrarSessao()" class="btn btn-secundario btn-sm">Sair</a></li>
-      </ul>
-      <div class="acess-widget" id="acess-widget">
-        <button class="acess-btn-principal" id="acess-toggle" onclick="toggleAcessWidget()" aria-label="Opções de acessibilidade" title="Acessibilidade">♿</button>
-        <div class="acess-painel" id="acess-painel" aria-hidden="true">
-          <div class="acess-painel-titulo">Acessibilidade</div>
-          <div class="acess-opcao">
-            <span class="acess-opcao-label">Tamanho da fonte</span>
-            <div class="acess-font-controles">
-              <button class="acess-font-btn" onclick="alterarFonte(-1)" aria-label="Diminuir fonte" title="Diminuir fonte">A−</button>
-              <span class="acess-font-valor" id="acess-font-valor">100%</span>
-              <button class="acess-font-btn" onclick="alterarFonte(1)" aria-label="Aumentar fonte" title="Aumentar fonte">A+</button>
-            </div>
+<nav class="navbar" role="navigation" aria-label="Navegação">
+  <a href="../index.html" class="navbar-logo">Estagi<span>ando</span> 🎓</a>
+  <div class="navbar-direita">
+    <ul class="navbar-links">
+      <li><a href="../index.html">← Ver vagas</a></li>
+      <li><a href="#" onclick="encerrarSessao()" class="btn btn-secundario btn-sm">Sair</a></li>
+    </ul>
+    <div class="acess-widget" id="acess-widget">
+      <button class="acess-btn-principal" id="acess-toggle"
+              onclick="toggleAcessWidget()"
+              aria-label="Acessibilidade"
+              aria-expanded="false">♿</button>
+      <div class="acess-painel" id="acess-painel" aria-hidden="true">
+        <div class="acess-painel-titulo">Acessibilidade</div>
+        <div class="acess-opcao">
+          <span class="acess-opcao-label">Tamanho da fonte</span>
+          <div class="acess-font-controles">
+            <button class="acess-font-btn" onclick="alterarFonte(-1)" aria-label="Diminuir fonte">A−</button>
+            <span class="acess-font-valor" id="acess-font-valor" aria-live="polite">100%</span>
+            <button class="acess-font-btn" onclick="alterarFonte(1)"  aria-label="Aumentar fonte">A+</button>
           </div>
-          <button class="acess-reset" onclick="resetarAcessibilidade()">↺ Resetar</button>
         </div>
-      </div>
-      <button class="btn-tema" onclick="alternarTema()" title="Alternar modo escuro" aria-label="Alternar tema"></button>
-    </div>
-  </nav>
-
-  <main class="dashboard-pagina container">
-
-    <div class="perfil-header card animar-entrada">
-      <div class="perfil-avatar" id="perfil-avatar">?</div>
-      <div class="perfil-info">
-        <h1 class="perfil-nome" id="perfil-nome">Carregando...</h1>
-        <p class="perfil-email" id="perfil-email"></p>
-        <div class="perfil-tags">
-          <span class="tag" id="perfil-area-tag">—</span>
-          <span class="tag tag-tech">🎓 Estudante</span>
-        </div>
+        <button class="acess-reset" onclick="resetarAcessibilidade()">↺ Resetar</button>
       </div>
     </div>
+    <button class="btn-tema" onclick="alternarTema()" aria-label="Alternar tema"></button>
+  </div>
+</nav>
 
-    <div class="dash-stats animar-entrada">
-      <div class="dash-stat-card card">
-        <span class="dash-stat-numero" id="stat-vagas-disponiveis">0</span>
-        <span class="dash-stat-label">Vagas disponíveis</span>
-      </div>
-      <div class="dash-stat-card card">
-        <span class="dash-stat-numero">🔍</span>
-        <span class="dash-stat-label">Status: Buscando</span>
-      </div>
-    </div>
+<main class="dashboard-pagina container" role="main">
 
-    <div class="dash-secao animar-entrada">
-      <h2 class="dash-secao-titulo">⭐ Vagas recomendadas para você</h2>
-      <div class="vagas-grid" id="vagas-recomendadas">
-        
+  <div class="perfil-header card animar-entrada">
+    <div class="perfil-avatar" id="perfil-avatar" aria-hidden="true">?</div>
+    <div class="perfil-info">
+      <h1 class="perfil-nome" id="perfil-nome">Carregando…</h1>
+      <p class="perfil-email" id="perfil-email"></p>
+      <div class="perfil-tags">
+        <span class="tag" id="perfil-area-tag">—</span>
+        <span class="tag tag-tech">🎓 Estudante</span>
       </div>
     </div>
+  </div>
 
-  </main>
+  <div class="dash-stats animar-entrada" role="region" aria-label="Estatísticas de vagas">
+    <div class="dash-stat-card card">
+      <span class="dash-stat-numero" id="stat-vagas-disponiveis">0</span>
+      <span class="dash-stat-label">Vagas disponíveis</span>
+    </div>
+    <div class="dash-stat-card card">
+      <span class="dash-stat-numero" id="stat-rj">0</span>
+      <span class="dash-stat-label">Vagas no RJ</span>
+    </div>
+    <div class="dash-stat-card card">
+      <span class="dash-stat-numero" id="stat-estagios">0</span>
+      <span class="dash-stat-label">Estágios</span>
+    </div>
+  </div>
 
-  <footer>
-    <p>Feito com 💙 pela turma de ADS — <strong>Estagiando</strong> &copy; 2025</p>
-  </footer>
+  <div class="dash-secao animar-entrada">
+    <h2 class="dash-secao-titulo">⭐ Vagas recomendadas para você</h2>
+    <div id="dash-loading" style="text-align:center;padding:2rem;color:var(--texto-secundario)">
+      <span class="spinner">⏳</span> Buscando vagas…
+    </div>
+    <div class="vagas-grid" id="vagas-recomendadas" role="list" aria-label="Vagas recomendadas"></div>
+  </div>
 
-  <script src="../js/main.js"></script>
-  <script src="../js/dashboard-estudante.js"></script>
+</main>
+
+<footer role="contentinfo">
+  <p>Feito com ❤️ · <strong>Estagiando</strong> &copy; 2025</p>
+</footer>
+
+<script src="../js/main.js"></script>
+<script src="../js/dashboard-estudante.js"></script>
 </body>
 </html>

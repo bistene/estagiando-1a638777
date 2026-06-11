@@ -181,3 +181,14 @@
 }
 
 
+
+/* v4 mobile improvements */
+@media (max-width: 480px) {
+  .login-form-container { padding: 1.5rem 1rem; }
+  .perfil-selector { flex-direction: column; border-radius: var(--radius-md); }
+}
+.senha-forca { display:flex; gap:.3rem; margin-top:.4rem; }
+.forca-barra { flex:1; height:4px; border-radius:2px; background:var(--borda-cor); transition:background .3s; }
+.forca-barra.ativa-fraco  { background:#e74c3c; }
+.forca-barra.ativa-medio  { background:#f59e0b; }
+.forca-barra.ativa-forte  { background:#34c77a; }
