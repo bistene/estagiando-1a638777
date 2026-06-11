@@ -223,3 +223,44 @@ function validarCpf(cpf) {
   return true;
 }
 
+/* ── Validação de senha em tempo real ───────────────────────── */
+function validarSenhaAoDigitar(input) {
+  const v = input.value;
+  const wrap = document.getElementById('forca-barra-wrap');
+  const barra = document.getElementById('forca-barra');
+  const texto = document.getElementById('forca-texto');
+  const reqs = document.getElementById('senha-requisitos');
+  if (wrap) wrap.style.display = v ? 'block' : 'none';
+  if (reqs) reqs.style.display = v ? 'block' : 'none';
+
+  const checks = {
+    min: v.length >= 8,
+    mai: /[A-Z]/.test(v),
+    num: /\d/.test(v),
+    esp: /[!@#$%^&*(),.?":{}|<>_\-+=/\\[\]]/.test(v),
+    max: v.length <= 72
+  };
+  Object.keys(checks).forEach(k => {
+    const el = document.getElementById('req-' + k);
+    if (el) { el.style.color = checks[k] ? '#34c77a' : 'var(--texto-secundario)'; el.firstChild.nodeValue = (checks[k] ? '● ' : '○ ') + el.textContent.substring(2); }
+  });
+  const score = Object.values(checks).filter(Boolean).length;
+  if (barra && texto) {
+    const pct = (score / 5) * 100;
+    barra.style.width = pct + '%';
+    if (score <= 2)      { barra.style.background = '#e74c3c'; texto.textContent = 'Senha fraca'; texto.style.color = '#e74c3c'; }
+    else if (score <= 4) { barra.style.background = '#f59e0b'; texto.textContent = 'Senha média'; texto.style.color = '#f59e0b'; }
+    else                 { barra.style.background = '#34c77a'; texto.textContent = 'Senha forte'; texto.style.color = '#34c77a'; }
+  }
+}
+
+function validarConfirmaSenha(input) {
+  const senha = document.getElementById('cad-senha')?.value || '';
+  const fb = document.getElementById('feedback-confirma');
+  if (!fb) return;
+  if (!input.value) { fb.style.display = 'none'; input.style.borderColor = ''; return; }
+  if (input.value === senha) { fb.textContent = '✅ Senhas conferem'; fb.style.color = '#1a6040'; input.style.borderColor = '#34c77a'; }
+  else                       { fb.textContent = '❌ Senhas diferentes'; fb.style.color = '#a02020'; input.style.borderColor = '#e74c3c'; }
+  fb.style.display = 'block';
+}
+
