@@ -253,3 +253,29 @@ document.addEventListener('click', function (e) {
     if (btn) btn.classList.remove('ativo');
   }
 });
+
+/* ── Menu mobile ─────────────────────────────────────────────── */
+function toggleMenuMobile() {
+  const btn    = document.getElementById('navbar-menu-btn');
+  const drawer = document.getElementById('navbar-drawer');
+  if (!btn || !drawer) return;
+  const aberto = drawer.classList.toggle('aberto');
+  btn.classList.toggle('aberto', aberto);
+  btn.setAttribute('aria-expanded', aberto);
+}
+
+/* ── Toast simples ───────────────────────────────────────────── */
+function mostrarToast(msg, tipo) {
+  tipo = tipo || 'info';
+  let cont = document.querySelector('.toast-container');
+  if (!cont) {
+    cont = document.createElement('div');
+    cont.className = 'toast-container';
+    document.body.appendChild(cont);
+  }
+  const t = document.createElement('div');
+  t.className = 'toast toast-' + tipo;
+  t.textContent = msg;
+  cont.appendChild(t);
+  setTimeout(function () { t.style.opacity = '0'; setTimeout(function(){ t.remove(); }, 300); }, 2800);
+}
