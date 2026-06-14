@@ -5,21 +5,21 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
   <!-- ── SEO ─────────────────────────────────────────────────── -->
-  <title>Estagiando — Vagas de Estágio e TI no Rio de Janeiro e Brasil</title>
+  <title>Estagiaando — Vagas de Estágio e TI no Rio de Janeiro e Brasil</title>
   <meta name="description" content="Encontre vagas de estágio e emprego em TI no Rio de Janeiro e em todo o Brasil. Front-end, Back-end, Full Stack, Python, React, DevOps e muito mais. Grátis para estudantes." />
   <meta name="keywords" content="estágio, vaga de estágio, emprego TI, desenvolvedor Rio de Janeiro, estágio programação, estágio tecnologia, estagiando" />
   <meta name="robots" content="index, follow" />
-  <link rel="canonical" href="https://estagiando.com.br/" />
+  <link rel="canonical" href="https://estagiaando.com.br/" />
 
   <!-- ── OPEN GRAPH ────────────────────────────────────────────── -->
   <meta property="og:type"        content="website" />
-  <meta property="og:url"         content="https://estagiando.com.br/" />
-  <meta property="og:title"       content="Estagiando — Vagas de Estágio e TI" />
+  <meta property="og:url"         content="https://estagiaando.com.br/" />
+  <meta property="og:title"       content="Estagiaando — Vagas de Estágio e TI" />
   <meta property="og:description" content="Conectamos estudantes às melhores oportunidades de estágio em TI e em todo o Brasil. Simples, rápido e gratuito." />
-  <meta property="og:image"       content="https://estagiando.com.br/og-image.png" />
+  <meta property="og:image"       content="https://estagiaando.com.br/og-image.png" />
   <meta property="og:locale"      content="pt_BR" />
   <meta name="twitter:card"       content="summary_large_image" />
-  <meta name="twitter:title"      content="Estagiando — Vagas de Estágio e TI" />
+  <meta name="twitter:title"      content="Estagiaando — Vagas de Estágio e TI" />
   <meta name="twitter:description" content="Vagas de estágio em TI, Rio de Janeiro e todo o Brasil." />
 
   <!-- ── STRUCTURED DATA ──────────────────────────────────────── -->
@@ -27,12 +27,12 @@
   {
     "@context": "https://schema.org",
     "@type": "WebSite",
-    "name": "Estagiando",
-    "url": "https://estagiando.com.br/",
+    "name": "Estagiaando",
+    "url": "https://estagiaando.com.br/",
     "description": "Plataforma de vagas de estágio e emprego em TI para estudantes brasileiros",
     "potentialAction": {
       "@type": "SearchAction",
-      "target": "https://estagiando.com.br/?q={search_term_string}",
+      "target": "https://estagiaando.com.br/?q={search_term_string}",
       "query-input": "required name=search_term_string"
     }
   }
@@ -55,15 +55,15 @@
      NAVBAR
 ════════════════════════════════════════════════════════════════ -->
 <nav class="navbar" role="navigation" aria-label="Navegação principal">
-  <a href="index.html" class="navbar-logo" aria-label="Estagiando — página inicial">
-    Estagi<span>ando</span> 🎓
+  <a href="index.html" class="navbar-logo" aria-label="Estagiaando — página inicial">
+    Estagi<span>aando</span> 🎓
   </a>
 
   <div class="navbar-direita">
     <ul class="navbar-links" role="list">
       <li><a href="index.html" aria-current="page">Vagas</a></li>
       <li id="link-dashboard" style="display:none">
-        <a href="#" id="link-area-usuario">Minha Área</a>
+        <a href="pages/dashboard-estudante.html" id="link-area-usuario">Minha Área</a>
       </li>
       <li id="link-login">
         <a href="pages/login.html" class="btn btn-primario btn-sm">Entrar</a>
@@ -168,30 +168,6 @@
 </section>
 
 <!-- ══════════════════════════════════════════════════════════════
-     CIDADES RJ — DESTAQUE
-════════════════════════════════════════════════════════════════ -->
-<section class="secao-destaque" aria-label="Cidades do Rio de Janeiro">
-  <div class="container">
-    <div class="destaque-header">
-      <h2 class="destaque-titulo">📍 Rio de Janeiro</h2>
-      <button class="btn btn-secundario btn-sm" onclick="limparFiltroRJ()">Ver todas</button>
-    </div>
-    <div class="cidades-chips" role="list" aria-label="Filtrar por cidade">
-      <button class="cidade-chip" role="listitem" data-cidade="Rio de Janeiro" onclick="filtrarCidadeRJ('Rio de Janeiro')">Rio de Janeiro</button>
-      <button class="cidade-chip" role="listitem" data-cidade="Niterói"        onclick="filtrarCidadeRJ('Niterói')">Niterói</button>
-      <button class="cidade-chip" role="listitem" data-cidade="São Gonçalo"    onclick="filtrarCidadeRJ('São Gonçalo')">São Gonçalo</button>
-      <button class="cidade-chip" role="listitem" data-cidade="Nova Iguaçu"    onclick="filtrarCidadeRJ('Nova Iguaçu')">Nova Iguaçu</button>
-      <button class="cidade-chip" role="listitem" data-cidade="Duque de Caxias" onclick="filtrarCidadeRJ('Duque de Caxias')">Duque de Caxias</button>
-      <button class="cidade-chip" role="listitem" data-cidade="Petrópolis"     onclick="filtrarCidadeRJ('Petrópolis')">Petrópolis</button>
-      <button class="cidade-chip" role="listitem" data-cidade="Volta Redonda"  onclick="filtrarCidadeRJ('Volta Redonda')">Volta Redonda</button>
-      <button class="cidade-chip" role="listitem" data-cidade="Macaé"          onclick="filtrarCidadeRJ('Macaé')">Macaé</button>
-      <button class="cidade-chip" role="listitem" data-cidade="Campos dos Goytacazes" onclick="filtrarCidadeRJ('Campos dos Goytacazes')">Campos</button>
-      <button class="cidade-chip" role="listitem" data-cidade="Cabo Frio"      onclick="filtrarCidadeRJ('Cabo Frio')">Cabo Frio</button>
-    </div>
-  </div>
-</section>
-
-<!-- ══════════════════════════════════════════════════════════════
      ABAS
 ════════════════════════════════════════════════════════════════ -->
 <nav class="secao-abas" aria-label="Categorias de vagas">
@@ -235,7 +211,7 @@
 <section class="secao-filtros" aria-label="Filtros de busca">
   <div class="container">
     <div class="filtros-card card">
-      <h2 class="filtros-titulo">🔍 Encontre sua vaga ideal</h2>
+      <h2 class="filtros-titulo"> Encontre sua vaga ideal</h2>
 
       <div class="filtros-grid">
 
@@ -243,7 +219,6 @@
         <div class="form-grupo filtros-busca">
           <label class="form-label" for="filtro-busca">🔍 Busca</label>
           <div style="position:relative">
-            <span class="busca-icone" aria-hidden="true">🔍</span>
             <input class="form-input busca-input" id="filtro-busca"
                    type="search"
                    placeholder="Cargo, empresa, cidade…"
@@ -441,13 +416,9 @@
      FOOTER
 ════════════════════════════════════════════════════════════════ -->
 <footer role="contentinfo">
-  <p>Feito com ❤️ pelo soprad · <strong>Estagiando</strong> &copy; 2025</p>
-  <p style="margin-top:.3rem;font-size:.78rem;color:var(--texto-placeholder)">
-    Vagas em tempo real via API Adzuna · Dados atualizados automaticamente
-  </p>
+  <p><strong>Estagiaando</strong> &copy; 2026</p>
+  
   <nav class="footer-links" aria-label="Links do rodapé">
-    <a href="sitemap.xml">Sitemap</a>
-    <a href="robots.txt">Robots</a>
     <a href="pages/login.html">Entrar</a>
   </nav>
 </footer>
